@@ -94,7 +94,7 @@ class Grade extends Component {
 
         return (
 
-            grade.course.session + " SEMESTER " + moment(grade.start).format("YY").toString() + "/" + moment(grade.end).format("YY").toString()
+            grade.course.session + " SEMESTER " + moment(grade.startDate).format("YY").toString() + "/" + moment(grade.endDate).format("YY").toString()
 
         )
 
@@ -145,7 +145,7 @@ class Grade extends Component {
                                 {
                                     index > 0 && (
                                         grade.course.session !== grades[index - 1].course.session ||
-                                        moment(grade.start).format("YY").toString() !== moment(grades[index - 1].start).format("YY").toString()
+                                        moment(grade.startDate).format("YY").toString() !== moment(grades[index - 1].startDate).format("YY").toString()
                                     )
 
                                         ?

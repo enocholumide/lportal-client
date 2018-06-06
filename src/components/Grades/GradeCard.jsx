@@ -115,7 +115,7 @@ class Grade extends Component {
 
                         <label >{grade.course.name}</label>
                         <View style={{ flexDirection: 'row' }}>
-                            <label>{grade.score + " " + grade.grade}</label>
+                            <label>{grade.score + " " + grade.gradeLevel}</label>
                             <Icon name="info circle" color="blue" style={{ marginLeft: 5 }} onClick={() => this.setState({ open: !this.state.open })} />
                         </View>
 

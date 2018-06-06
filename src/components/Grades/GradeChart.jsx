@@ -82,10 +82,10 @@ class GradeChart extends Component {
 
                         <View style={styles.item}
                             key={index}>
-                            <Text style={styles.label}>{grade.grade} {this.props.grade.grade === grade.grade ? " (including your performance)" : ""}</Text>
+                            <Text style={styles.label}>{grade.gradeLevel} {this.props.grade.gradeLevel === grade.gradeLevel ? " (including your performance)" : ""}</Text>
                             <View style={styles.data}>
                                 {
-                                    <Animated.View style={[styles.bar, styles.points, { width: grade.width, backgroundColor: this.props.grade.grade === grade.grade ? "blue" : "red" }]} />
+                                    <Animated.View style={[styles.bar, styles.points, { width: grade.width, backgroundColor: this.props.grade.gradeLevel === grade.gradeLevel ? "blue" : "red" }]} />
                                 }
                                 <Text style={styles.dataNumber}>{grade.count}</Text>
                             </View>
@@ -196,7 +196,7 @@ class GradeChart extends Component {
         let gradesArray = [];
 
         for (const key of Object.keys(details)) {
-            gradesArray.push({ grade: key, count: details[key], width: 0 })
+            gradesArray.push({ gradeLevel: key, count: details[key], width: 0 })
         }
 
         return gradesArray

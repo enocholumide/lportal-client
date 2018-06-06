@@ -1,13 +1,16 @@
-const DEV = "http://localhost:8080/api/";
+const DEV = "http://localhost:8080/api/"
 const PROD = "https://lportal.herokuapp.com/api/"
 
 export const prefix = PROD
 
 export const apis = {
     prefix: prefix,
+    users: prefix + "users",
+    news: prefix + "news",
+    schools: prefix + "schools",
     departments: prefix + "departments",
     courses: prefix + "courses",
-    student_grades: prefix + "grades/student/",
+    student_grades: prefix + "grades/student/", 
     grade_statistics: prefix + "grades/stat/", 
     course_media_upload: prefix + "courses/media/upload/" ///api/courses/media/upload/
 }

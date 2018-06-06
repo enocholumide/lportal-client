@@ -1,21 +1,19 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
 import { View } from 'react-native-web';
 import { colors } from '../../shared/appStyles';
 import HeaderNavigator from '../../shared/Header/Header';
 import { Jumbotron, Button } from 'reactstrap'
-import { Link } from 'react-router-dom';
 
-class Dashboard extends Component {
+class Jobs extends Component {
 
     render() {
         return (
             <div>
-                <HeaderNavigator activeIndex={0} />
-                <View style={{flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.muteColor}}>
-                    <Jumbotron style={{margin: 100}}>
-                        <h1 className="display-3">Dashboard</h1>
-                        <p className="lead">So, this site is currently under development, we are still working on the components.</p>
+                <HeaderNavigator activeIndex={7} />
+                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.muteColor }}>
+                    <Jumbotron style={{ margin: 100 }}>
+                        <h1 className="display-3">Jobs</h1>
+                        <p className="lead">Jobs jobs jobs! Who doesnt like a good job? Working on it!</p>
                         <hr className="my-2" />
                         <p>You may play around and see what is up :) </p>
                         <p className="lead">
@@ -29,4 +27,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default Jobs;

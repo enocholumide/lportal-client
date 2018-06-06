@@ -6,7 +6,8 @@ import { View } from 'react-native-web'
 import { Row, Col } from 'reactstrap';
 import { colors } from '../../shared/appStyles';
 import Loading from "../../shared/Loader";
-import Feed from './Feed';
+import Feed from './Feed'
+import { apis } from '../../shared/config'
 
 class News extends Component {
 
@@ -73,7 +74,7 @@ class News extends Component {
                             placeholder='Filter news by department'
                             fluid multiple search selection
                             options={this.state.schools}
-                            onChange={(event, data) => this.filterNews(data.value)}
+                            //onChange={(event, data) => this.filterNews(data.value)}
                         /> 
 
                         {
@@ -108,8 +109,8 @@ class News extends Component {
      */
     loadDataFromServer = () => {
 
-        var schoolsRequest = 'http://localhost:8080/api/schools';
-        var newsRequest = 'http://localhost:8080/api/news';
+        let schoolsRequest = apis.schools;
+        let newsRequest = apis.news
 
         axios.all(
             [
@@ -161,7 +162,7 @@ class News extends Component {
 
                 for (var i = 0; i < values.length; i++) {
 
-                    if (feed.user.school.id === values[i]) {
+                    if (feed.applicationUser.school.id === values[i]) {
                         filteredNews.push(feed)
                     }
                 }

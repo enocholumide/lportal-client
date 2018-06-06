@@ -3,7 +3,7 @@ import Header from '../../shared/Header/Header';
 import Loader from '../../shared/Loader';
 import { Row, Col } from 'reactstrap';
 import { View } from 'react-native-web';
-import { colors } from '../../shared/appStyles';
+import { colors, apis } from '../../shared/config';
 import { Dropdown, List, Checkbox } from 'semantic-ui-react';
 import axios from "axios";
 import Person from './Person'
@@ -192,7 +192,7 @@ class People extends Component {
         this.setState({ peopleListIsReady: false });
 
         // TODO: Change the API to point to the app server, i.e the backend (Spring) server
-        var usersAPI = "http://localhost:8080/api/users";
+        let  usersAPI = apis.users;
 
         axios.get(usersAPI)
             .then((response) => {

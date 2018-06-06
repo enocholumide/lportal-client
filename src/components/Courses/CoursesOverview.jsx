@@ -50,7 +50,7 @@ export default class CoursesOverview extends Component {
                     <h2 style={{ marginTop: 20 }}>Overview</h2>
 
                     <Row>
-                        <Col xs="3" lg="3" sm="3" style={{ backgroundColor: 'red' }}>.col-3</Col>
+                        <Col xs="3" lg="3" sm="3" style={{ backgroundColor: 'white' }}></Col>
                         <Col xs="6" lg="6" sm="6" style={{ padding: 15 }}>
 
                             {
@@ -67,7 +67,7 @@ export default class CoursesOverview extends Component {
                             }
 
                         </Col>
-                        <Col xs="3" lg="3" sm="3" style={{ backgroundColor: 'blue' }}>.col-auto - variable width content</Col>
+                        <Col xs="3" lg="3" sm="3" style={{ backgroundColor: 'white' }}></Col>
                     </Row>
 
                 </Container>

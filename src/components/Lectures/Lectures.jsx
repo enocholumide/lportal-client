@@ -40,6 +40,10 @@ class Lecture extends Component {
 
                 if (coursesResponse.status === 200 && departmentsResponse.status === 200) {
 
+                    console.log(coursesResponse.data)
+                    console.log(departmentsResponse.data)
+
+
                     let departmentDropdown = this.mapDepartmentsToDropDownList(departmentsResponse.data);
                     //console.log(coursesResponse.data)
 
@@ -74,7 +78,7 @@ class Lecture extends Component {
         // 1. Filter by department
         if (selectedDepartment.length > 0) {
             courses = courses.filter((course =>
-                course.program.some((program) => program.department.name === selectedDepartment)))
+                course.programs.some((program) => program.department.name === selectedDepartment)))
         }
         // 2. Filter by programe level
         if (selectedLevel.length > 0) {

@@ -3,6 +3,7 @@ import { Card, Image, List, Feed, Form, Button } from 'semantic-ui-react';
 import moment from 'moment';
 import { View, TouchableOpacity } from 'react-native-web';
 import axios from 'axios'
+import { apis } from '../../shared/config'
 
 class Feeds extends Component {
 
@@ -27,10 +28,10 @@ class Feeds extends Component {
                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
                     <List>
                         <List.Item>
-                            <Image avatar src={feed.user.photoUrl} />
+                            <Image avatar src={feed.applicationUser.photoUrl} />
                             <List.Content>
-                                <List.Header as='a'>{feed.user.firstName + " " + feed.user.lastName}</List.Header>
-                                <List.Description>{feed.user.department.name}</List.Description>
+                                <List.Header as='a'>{feed.applicationUser.firstName + " " + feed.applicationUser.lastName}</List.Header>
+                                <List.Description>{feed.applicationUser.department.name}</List.Description>
                             </List.Content>
                         </List.Item>
                     </List>
@@ -114,18 +115,21 @@ class Feeds extends Component {
 
         if (this.state.reply.length > 0) {
 
-            var currentUser = 2
+            let currentapplicationUser = 2
+
+            // /api/news/{news_id}/comments/add/applicationUser/{user_id}
+
+            let reply = "" + apis.news + "/" + feed.id + "/comments/add/applicationUser/" + currentapplicationUser
 
             axios
-                .put(
-                    "http://localhost:8080/api/news/comments/" + feed.id + "/add/user/ " + currentUser,
+                .put(reply,
                     {
                         text: this.state.reply
                     }
                 )
                 .then((response) => {
                     
-                    var updatedFeed = response.data;
+                    let updatedFeed = response.data;
                     this.setState({ events: this.mapCommentsToEvents(updatedFeed.comments), feed: updatedFeed, reply: '' })
                     console.log(this.formArea)
                 });
@@ -139,8 +143,8 @@ class Feeds extends Component {
             events.push(
                 {
                     date: moment(comment.created).fromNow(),
-                    image: comment.user.photoUrl,
-                    summary: comment.user.firstName + " " + comment.user.lastName,
+                    image: comment.applicationUser.photoUrl,
+                    summary: comment.applicationUser.firstName + " " + comment.applicationUser.lastName,
                     extraText: comment.text,
                     extraImages: comment.extraImages.length > 0 ? comment.extraImages.split("&") : [],
 
