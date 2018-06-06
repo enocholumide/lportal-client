@@ -13,7 +13,7 @@ class Exams extends Component {
                 <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.muteColor }}>
                     <Jumbotron style={{ margin: 100 }}>
                         <h1 className="display-3">Exams</h1>
-                        <p className="lead">Upcoming and registered exams will show here. Students can register or cancel an exam too. Working on it!</p>
+                        <p className="lead">Upcoming and registered exams will show here. Students can register or cancel an exam too. Working on it! :)</p>
                         <hr className="my-2" />
                         <p>You may play around and see what is up :) </p>
                         <p className="lead">
