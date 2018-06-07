@@ -21,7 +21,6 @@ class Info extends Component {
                         </p>
                     </Jumbotron>
                 </View>
-
             </div>
         );
     }

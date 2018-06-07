@@ -40,7 +40,7 @@ class Person extends Component {
 
                         </View>
 
-                        <Icon name={this.state.showMore ? "caret up" : "caret down"} onClick={()=> this.setState({showMore: !this.state.showMore})} />
+                        <Icon name={this.state.showMore ? "caret up" : "caret down"} onClick={() => this.setState({ showMore: !this.state.showMore })} />
 
                     </View>
 

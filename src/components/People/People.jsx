@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import Header from '../../shared/Header/Header';
-import Loader from '../../shared/Loader';
-import { Row, Col } from 'reactstrap';
-import { View } from 'react-native-web';
-import { colors, apis } from '../../shared/config';
-import { Dropdown, List, Checkbox } from 'semantic-ui-react';
-import axios from "axios";
+import React, { Component } from 'react'
+import Header from '../../shared/Header/Header'
+import Loader from '../../shared/Loader'
+import { Row, Col } from 'reactstrap'
+import { View } from 'react-native-web'
+import { colors, apis } from '../../shared/config'
+import { Dropdown, List, Checkbox, Container } from 'semantic-ui-react'
+import axios from "axios"
 import Person from './Person'
+import MediaQuery from 'react-responsive'
 
 class People extends Component {
 
@@ -45,57 +46,65 @@ class People extends Component {
         );
     }
 
+
+    renderComponent = () => {
+
+        return (
+            <div>
+
+                <MediaQuery maxDeviceWidth={768}>
+
+                    <Container style={{ marginTop: 50, width: "100%" }}>
+                        {this.renderMainContent()}
+                    </Container>
+
+                </MediaQuery>
+
+                <MediaQuery minDeviceWidth={769}>
+
+                    <Row>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                            {this.renderMainContent()}
+                        </Col>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                    </Row>
+                </MediaQuery>
+
+            </div>
+        )
+    }
+
     /**
      * After neccessary checks and data have been retrieved from the server,
      * this function will proceed to render the contents of the compoent
      */
-    renderComponent = () => {
+    renderMainContent() {
 
         // 1. At first it will apply search filters
         let people = this.applySearchFilters(this.state.peopleList);
 
         return (
             <div>
+                {this.renderFilterArea(people)}
 
-                <Row>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-
-
-                        <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
-
-                            <p>col-sm-4</p>
-
-                        </View>
+                {
+                    this.state.peopleListIsReady ?
 
 
-                    </Col>
-                    <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                        this.renderPeopleList(people)
 
-                        {this.renderFilterArea(people)}
+                        :
 
-                        {
-                            this.state.peopleListIsReady ?
+                        <Loader text={"Refreshing .... "} />
 
-
-                                this.renderPeopleList(people)
-
-                                :
-
-                                <Loader text={"Refreshing .... "} />
-
-                        }
-
-                    </Col>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-
-
-
-                        .col-sm-4
-
-
-                    </Col>
-                </Row>
-
+                }
             </div>
         )
     }
@@ -162,7 +171,7 @@ class People extends Component {
      * @param peopleList : the list of people to filter
      */
     applySearchFilters = (peopleList) => {
-        
+
         // 1. First filter based on the current search input
         let people = peopleList
             .filter(item => (`${item.firstName} ${item.lastName} ${item.department.name}`).toUpperCase()
@@ -192,7 +201,7 @@ class People extends Component {
         this.setState({ peopleListIsReady: false });
 
         // TODO: Change the API to point to the app server, i.e the backend (Spring) server
-        let  usersAPI = apis.users;
+        let usersAPI = apis.users;
 
         axios.get(usersAPI)
             .then((response) => {

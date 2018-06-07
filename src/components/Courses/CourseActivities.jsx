@@ -9,6 +9,8 @@ export default class CourseActivities extends React.Component {
     constructor(props) {
         super(props)
 
+        console.log(this.props)
+
         this.state = {
             activities: []
         }
@@ -21,6 +23,7 @@ export default class CourseActivities extends React.Component {
     loadActivities() {
 
         //http://localhost:8080/api/courses/1/activities
+        
 
         let request = "" + apis.courses + "/" + this.props.course.id + "/activities"
 
@@ -57,7 +60,8 @@ export default class CourseActivities extends React.Component {
             <div style={{ margin: 10 }}>
                 <h4>Recent Activities</h4>
                 <Divider />
-                <Card>
+
+                <Card style={{justifyContent: 'center', padding: 10}}>
 
                     {
                         activities.length < 1 ?
@@ -84,7 +88,7 @@ export default class CourseActivities extends React.Component {
                     </List>
 
                 </Card>
-
+                
             </div>
         );
     }

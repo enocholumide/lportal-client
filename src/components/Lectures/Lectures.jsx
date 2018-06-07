@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
-import HeaderNavigator from '../../shared/Header/Header';
-import { Button, Dropdown, List, Message } from 'semantic-ui-react';
+import React, { Component } from 'react'
+import HeaderNavigator from '../../shared/Header/Header'
+import { Button, Dropdown, List, Message, Container } from 'semantic-ui-react'
 import { View, ScrollView } from 'react-native-web'
-import { Row, Col } from 'reactstrap';
-import { colors } from '../../shared/appStyles';
-import { apis } from '../../shared/config.js';
-import axios from 'axios';
-import LectureCard from './LectureCard';
+import { Row, Col } from 'reactstrap'
+import { colors } from '../../shared/appStyles'
+import { apis } from '../../shared/config.js'
+import axios from 'axios'
+import LectureCard from './LectureCard'
+import MediaQuery from 'react-responsive'
 
 class Lecture extends Component {
 
@@ -193,7 +194,7 @@ class Lecture extends Component {
 
                     <View>
 
-                        <Button.Group style={{ margin: 20, justifyContent: 'center'}}>
+                        <Button.Group style={{ margin: 20, justifyContent: 'center' }}>
 
                             {
                                 department.programsOffered.map((program, index) =>
@@ -273,44 +274,50 @@ class Lecture extends Component {
 
     render() {
 
+        return (
+            <div>
+                <HeaderNavigator activeIndex={3} />
+
+                <MediaQuery maxDeviceWidth={768}>
+
+                    <Container style={{ marginTop: 50, width: "100%" }}>
+                        {this.renderMainContent()}
+                    </Container>
+
+                </MediaQuery>
+
+                <MediaQuery minDeviceWidth={769}>
+
+                    <Row>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                            {this.renderMainContent()}
+                        </Col>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                    </Row>
+                </MediaQuery>
+
+            </div>
+        );
+    }
+
+    renderMainContent() {
+
         let { alldepartments } = this.state
 
         return (
             <div>
-                <HeaderNavigator activeIndex={3} />
-                <Row>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-
-
-                        <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
-
-                            <p>col-sm-4</p>
-
-                        </View>
-
-
-                    </Col>
-                    <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
-
-                        {
-                            alldepartments.length > 0 ? this.renderComponent() : null
-                        }
-
-
-
-                    </Col>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-
-
-
-                        .col-sm-4
-
-
-                        </Col>
-                </Row>
-
+                {
+                    alldepartments.length > 0 ? this.renderComponent() : null
+                }
             </div>
-        );
+        )
     }
 
 }

@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import HeaderNavigator from '../../shared/Header/Header'
-import { Dropdown, Container } from 'semantic-ui-react';
+import { Dropdown, Container } from 'semantic-ui-react'
 import axios from 'axios'
 import { View } from 'react-native-web'
-import { Row, Col } from 'reactstrap';
-import { colors } from '../../shared/appStyles';
-import Loading from "../../shared/Loader";
+import { Row, Col } from 'reactstrap'
+import { colors } from '../../shared/appStyles'
+import Loading from "../../shared/Loader"
 import Feed from './Feed'
 import { apis } from '../../shared/config'
+import MediaQuery from 'react-responsive'
 
 class News extends Component {
 
@@ -27,6 +28,8 @@ class News extends Component {
 
         await this.loadDataFromServer();
 
+        window.addEventListener("resize", this.setState(this.state));
+
     }
 
     render() {
@@ -37,13 +40,13 @@ class News extends Component {
                 <HeaderNavigator activeIndex={1} />
 
                 {
-                    this.state.dataIsReady ? 
-                    
-                        this.renderComponent() 
-                    
+                    this.state.dataIsReady ?
+
+                        this.renderComponent()
+
                         :
 
-                        <Loading text={this.state.loadingMessage}/>
+                        <Loading text={this.state.loadingMessage} />
                 }
 
             </div>
@@ -54,54 +57,60 @@ class News extends Component {
 
         return (
 
-            <div>
+            <div className="main">
 
-                <Row>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                <MediaQuery maxDeviceWidth={768}>
 
+                    <Container style={{ marginTop: 50, width: "100%" }}>
+                        {this.renderMainContent()}
+                    </Container>
 
-                        <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
+                </MediaQuery>
 
-                            <p>col-sm-4</p>
+                <MediaQuery minDeviceWidth={769}>
 
-                        </View>
+                    <Row>
 
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
 
-                    </Col>
-                    <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding:10 }}>
+                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                            {this.renderMainContent()}
+                        </Col>
 
-                        <Dropdown
-                            placeholder='Filter news by department'
-                            fluid multiple search selection
-                            options={this.state.schools}
-                            //onChange={(event, data) => this.filterNews(data.value)}
-                        /> 
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
 
-                        {
-                            this.state.feedIsReady ?
-
-
-                                this.renderFeeds()
-
-                                :
-
-                                <Loading text={"Refreshing feeds"}/>
-
-                        }
-
-                    </Col>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-                    
-                    
-                    
-                    .col-sm-4
-                    
-                    
-                    </Col>
-                </Row>
+                    </Row>
+                </MediaQuery>
 
             </div>
         );
+    }
+
+    renderMainContent = () => {
+        return (
+            <div>
+                <Dropdown
+                    placeholder='Filter news by department'
+                    fluid multiple search selection
+                    options={this.state.schools}
+                //onChange={(event, data) => this.filterNews(data.value)}
+                />
+
+                {
+                    this.state.feedIsReady ?
+
+
+                        this.renderFeeds()
+
+                        :
+
+                        <Loading text={"Refreshing feeds"} />
+
+                }
+            </div>
+        )
     }
 
     /**
@@ -184,7 +193,7 @@ class News extends Component {
             return (
                 this.state.news.map((feed, index) =>
 
-                   <Feed feed={feed} key={index}/>
+                    <Feed feed={feed} key={index} />
 
                 )
             )
@@ -196,7 +205,7 @@ class News extends Component {
 
             )
         }
-    } 
+    }
 }
 
 export default News;

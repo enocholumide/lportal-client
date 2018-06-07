@@ -9,8 +9,9 @@ import CourseAssignments from './CourseAssignments'
 import CourseProgress from './CourseProgress'
 import CourseInfo from './CourseInfo'
 import axios from 'axios'
-import { apis } from '../../shared/config';
-import Loading from "../../shared/Loader";
+import { apis, colors } from '../../shared/config';
+import Loading from "../../shared/Loader"
+import MediaQuery from 'react-responsive'
 
 export default class Course extends React.Component {
 
@@ -54,33 +55,66 @@ export default class Course extends React.Component {
     render() {
 
         let { loading, loadingMessage, course } = this.state
+        
+        console.log(course)
 
         return (
             <div>
                 <HeaderNavigator activeIndex={6} />
 
-                <Container>
+                <MediaQuery maxDeviceWidth={768}>
 
-                    {
-                        loading ?
+                    <Container style={{ marginTop: 50, width: "100%" }}>
+                        {this.renderMainContent()}
+                    </Container>
 
-                            <Row>
-                                <Loading text={loadingMessage} />
-                            </Row>
+                </MediaQuery>
 
-                            :
+                <MediaQuery minDeviceWidth={769}>
 
-                            <Row>
-                                <Col xs="3" style={{ marginTop: 40 }}>{<CourseActivities ref="activities" course={course}/>}</Col>
-                                <Col xs="9">{this.renderCourse()}</Col>
-                            </Row>
-                    }
+                    <Row>
 
-                </Container>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                            {
+                                course ?
+                                
+                                <CourseActivities ref="activities" course={course} /> : null
 
+                            }
+                            
+                        </Col>
+
+                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                            {this.renderMainContent()}
+                        </Col>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                    </Row>
+                </MediaQuery>
 
             </div>
         );
+    }
+
+    renderMainContent() {
+
+        let { loading, loadingMessage, course } = this.state
+
+
+        return (
+            <div>
+                {
+                    loading ?
+
+                        <Loading text={loadingMessage} />
+
+                        :
+                        this.renderCourse()
+                }
+            </div>
+        )
     }
 
     renderCourse() {
@@ -88,7 +122,7 @@ export default class Course extends React.Component {
         let { course } = this.state;
 
         let panes = [
-            { menuItem: 'Files', render: () => <Tab.Pane>{<CourseFiles course={course} updateCourse={this.updateCourse}/>}</Tab.Pane> },
+            { menuItem: 'Files', render: () => <Tab.Pane>{<CourseFiles course={course} updateCourse={this.updateCourse} />}</Tab.Pane> },
             { menuItem: 'Students', render: () => <Tab.Pane>{<CourseStudents course={course} />}</Tab.Pane> },
             { menuItem: 'Assignments', render: () => <Tab.Pane>{<CourseAssignments course={course} updateCourse={this.updateCourse} />}</Tab.Pane> },
             { menuItem: 'Progress', render: () => <Tab.Pane>{<CourseProgress course={course} />}</Tab.Pane> },

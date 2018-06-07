@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
-import { View } from 'react-native-web';
-import {  Message } from 'semantic-ui-react';
-import HeaderNavigator from '../../shared/Header/Header';
-import { colors, apis, current_student_id } from '../../shared/config.js';
-import axios from 'axios';
-import Loading from '../../shared/Loader';
-import GradeCard from './GradeCard';
+import React, { Component } from 'react'
+import { Row, Col } from 'reactstrap'
+import { View } from 'react-native-web'
+import { Message, Container } from 'semantic-ui-react'
+import HeaderNavigator from '../../shared/Header/Header'
+import { colors, apis, current_student_id } from '../../shared/config.js'
+import axios from 'axios'
+import Loading from '../../shared/Loader'
+import GradeCard from './GradeCard'
 import moment from 'moment'
+import MediaQuery from 'react-responsive'
 
 class Grade extends Component {
 
@@ -65,24 +66,58 @@ class Grade extends Component {
 
         return (
 
-            <div>
+            <div className="main">
+
                 <HeaderNavigator activeIndex={4} />
 
-                <div>
+                <MediaQuery maxDeviceWidth={768}>
 
-                    {
-                        this.state.gradesAreReady ?
+                    <Container style={{ marginTop: 50, width: "100%" }}>
+                        {this.renderMainContent()}
+                    </Container>
 
-                            this.renderComponent()
+                </MediaQuery>
 
-                            :
+                <MediaQuery minDeviceWidth={769}>
 
-                            <Loading text={this.state.loadingMessage} />
-                    }
-                </div>
+                    <Row>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                            {this.renderMainContent()}
+                        </Col>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                    </Row>
+                </MediaQuery>
 
             </div>
         );
+    }
+
+    renderMainContent() {
+
+        return (
+
+            <div>
+
+                {
+                    this.state.gradesAreReady ?
+
+                        this.renderGrades()
+
+                        :
+
+                        <Loading text={this.state.loadingMessage} />
+                }
+            </div>
+
+        )
+
     }
 
     /**
@@ -173,47 +208,6 @@ class Grade extends Component {
         return (
             <p>No grades</p>
         )
-    }
-
-
-    renderComponent = () => {
-
-
-
-        return (
-            <div>
-
-                <Row>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-
-
-                        <View style={{ flex: 1, flexDirection: 'row', padding: 10 }}>
-
-                            <p>col-sm-4</p>
-
-                        </View>
-
-
-                    </Col>
-                    <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
-
-
-                        {this.renderGrades()}
-
-
-                    </Col>
-                    <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
-
-
-
-                        .col-sm-4
-
-
-                        </Col>
-                </Row>
-
-            </div>
-        );
     }
 }
 

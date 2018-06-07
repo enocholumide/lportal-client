@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios'
 import moment from 'moment'
 import Loading from "../../shared/Loader";
+import MediaQuery from 'react-responsive';
 
 export default class CoursesOverview extends Component {
 
@@ -45,32 +46,55 @@ export default class CoursesOverview extends Component {
         return (
             <div style={{ backgroundColor: colors.muteColor }}>
                 <HeaderNavigator activeIndex={6} />
-                <Container>
 
-                    <h2 style={{ marginTop: 20 }}>Overview</h2>
+                <h2 style={{ margin: 20 }}>Overview</h2>
+
+                <MediaQuery maxDeviceWidth={768}>
+
+                    <Container style={{ marginTop: 50, width: "100%" }}>
+                        {this.renderMainContent()}
+                    </Container>
+
+                </MediaQuery>
+
+                <MediaQuery minDeviceWidth={769}>
 
                     <Row>
-                        <Col xs="3" lg="3" sm="3" style={{ backgroundColor: 'white' }}></Col>
-                        <Col xs="6" lg="6" sm="6" style={{ padding: 15 }}>
 
-                            {
-                                loading ?
-
-                                    <div style={{height: 500}}>
-
-                                        <Loading text={loadingMessage} />
-
-                                    </div>
-
-
-                                    : this.renderContent()
-                            }
-
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
                         </Col>
-                        <Col xs="3" lg="3" sm="3" style={{ backgroundColor: 'white' }}></Col>
-                    </Row>
 
-                </Container>
+                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
+                            {this.renderMainContent()}
+                        </Col>
+
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        </Col>
+
+                    </Row>
+                </MediaQuery>
+            </div>
+        )
+    }
+
+    renderMainContent() {
+
+        let { loading, loadingMessage } = this.state;
+        return (
+            <div>
+                {
+                    loading ?
+
+                        <div style={{ height: 500 }}>
+
+                            <Loading text={loadingMessage} />
+
+                        </div>
+
+
+                        : this.renderContent()
+                }
+
             </div>
         )
     }
@@ -102,7 +126,7 @@ export default class CoursesOverview extends Component {
                                     <List.Item key={index} style={{ padding: 15 }}>
                                         <List.Icon name='github' size='large' verticalAlign='top' />
                                         <List.Content>
-                                            <List.Header as={Link} to={'/course/' + course.id } key='course'>{course.name} ({course.code})</List.Header>
+                                            <List.Header as={Link} to={'/course/' + course.id} key='course'>{course.name} ({course.code})</List.Header>
                                             <List.Description
                                                 style={{ marginTop: 10, marginBottom: 10 }} >
                                                 Registration deadline : {moment(new Date()).format("MMMM Do YYYY")}
