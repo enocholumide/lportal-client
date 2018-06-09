@@ -2,7 +2,7 @@ import React from 'react'
 import { Icon, List, Button,Dropdown, Message } from 'semantic-ui-react'
 import axios from 'axios'
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/storage'
 import { Progress } from 'reactstrap'
 import moment from 'moment'
 import swal from 'sweetalert'
@@ -176,7 +176,7 @@ export default class CourseFiles extends React.Component {
         
         for (let file of files) {
 
-            console.log(file)
+            //console.log(file)
 
             if(file.size < (1*1000000)) {
 

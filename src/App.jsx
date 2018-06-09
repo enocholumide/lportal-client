@@ -3,7 +3,7 @@ import './App.css';
 import Navigator from './navigator/Navigator'
 import ApplicationFooter from './shared/Footer'
 import firebase from 'firebase/app'
-import 'firebase/database'
+import 'firebase/storage'
 import { storageConfig } from './shared/config'
 import { Layout } from 'antd';
 const { Footer, Content } = Layout;
