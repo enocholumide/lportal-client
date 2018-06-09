@@ -28,7 +28,7 @@ class Person extends Component {
 
         return (
             <div>
-                <View style={{ borderRadius: 3, borderWidth: 1, padding: 15, borderColor: colors.muteColor, backgroundColor: person.role === "STAFF" ? colors.muteColor : "white" }}>
+                <View style={{ borderRadius: 3, borderWidth: 1, padding: 15, borderColor: colors.mute, backgroundColor: person.role === "STAFF" ? colors.mute : "white" }}>
                     <View style={{ flexDirection: 'row', flex: 1, justifyContent: "space-between", alignItems: "center" }}>
                         <View style={{ flexDirection: 'row', marginVertical: 10 }}>
 

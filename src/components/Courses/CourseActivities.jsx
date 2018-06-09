@@ -25,7 +25,7 @@ export default class CourseActivities extends React.Component {
         //http://localhost:8080/api/courses/1/activities
         
 
-        let request = "" + apis.courses + "/" + this.props.course.id + "/activities"
+        let request = "" + apis.courses + this.props.course.id + "/activities"
 
         axios.get(request)
             .then((response) => {

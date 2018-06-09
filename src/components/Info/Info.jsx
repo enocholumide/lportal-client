@@ -10,8 +10,8 @@ class Info extends Component {
         return (
             <div>
                 <HeaderNavigator activeIndex={8} />
-                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.muteColor }}>
-                    <Jumbotron style={{ margin: 100 }}>
+                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.mute }}>
+                    <Jumbotron>
                         <h1 className="display-3">Info</h1>
                         <p className="lead">General information about the app and how to use. To be honest, I still dont know what will be here!</p>
                         <hr className="my-2" />

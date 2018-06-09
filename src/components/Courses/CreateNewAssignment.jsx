@@ -70,9 +70,9 @@ class NewAssignment extends Component {
 
             // /api/courses/{c_id}/assignments/create/{u_id}
             // /api/courses/{c_id}/assignments/{a_id}/update/{u_id}
-            let put = "" + apis.courses + "/" + course.id + "/assignments/" + NEW + "/" + teacherID;
+            let put = "" + apis.courses + course.id + "/assignments/" + NEW + "/" + teacherID;
             if (mode === UPDATE) {
-                put = "" + apis.courses + "/" + course.id + "/assignments/" + this.props.assignment.id + "/update/" + teacherID
+                put = "" + apis.courses + course.id + "/assignments/" + this.props.assignment.id + "/update/" + teacherID
             }
 
             axios.put(put, assignment)

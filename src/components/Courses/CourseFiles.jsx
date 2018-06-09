@@ -39,7 +39,7 @@ export default class CourseFiles extends React.Component {
 
     loadContent(){
 
-        let request = "" + apis.courses + "/" + this.props.course.id + "/contents"
+        let request = "" + apis.courses + this.props.course.id + "/contents"
 
         axios.get(request)
         .then((response) => {
@@ -149,7 +149,7 @@ export default class CourseFiles extends React.Component {
 
         let { course } = this.props
         ///api/courses/{id}/content/{co_id}/delete
-        let deleteRequest = "" + apis.courses + "/" + this.props.course.id + "/content/" + file.id + "/delete"
+        let deleteRequest = "" + apis.courses + this.props.course.id + "/content/" + file.id + "/delete"
 
         axios.delete(deleteRequest)
         .then((response) => {
@@ -225,7 +225,7 @@ export default class CourseFiles extends React.Component {
                             let fp = { name: file.name, url: downloadURL, size: file.size, type: file.type }
                             let teacherID = 3 // STAFFFFFF
 
-                            let request = "" + apis.courses + "/" +  course.id + "/content/" + teacherID + "/create";
+                            let request = "" + apis.courses +  course.id + "/content/" + teacherID + "/create";
 
                             axios.put(request, fp) 
                                 .then((response) => {

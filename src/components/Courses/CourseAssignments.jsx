@@ -34,7 +34,7 @@ export default class CourseAssignments extends React.Component {
 
     loadAssignments() {
 
-        let request = "" + apis.courses + "/" + this.props.course.id + "/assignments"
+        let request = "" + apis.courses + this.props.course.id + "/assignments"
 
         axios.get(request)
             .then((response) => {

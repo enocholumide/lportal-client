@@ -64,14 +64,14 @@ class People extends Component {
 
                     <Row>
 
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
                         </Col>
 
                         <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
                             {this.renderMainContent()}
                         </Col>
 
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
                         </Col>
 
                     </Row>

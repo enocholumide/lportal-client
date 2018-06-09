@@ -10,8 +10,8 @@ class Jobs extends Component {
         return (
             <div>
                 <HeaderNavigator activeIndex={7} />
-                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.muteColor }}>
-                    <Jumbotron style={{ margin: 100 }}>
+                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.mute }}>
+                    <Jumbotron>
                         <h1 className="display-3">Jobs</h1>
                         <p className="lead">Jobs jobs jobs! Who doesnt like a good job? Working on it!</p>
                         <hr className="my-2" />

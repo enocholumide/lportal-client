@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import './App.css';
-import Navigator from './navigator/Navigator';
-import { Container } from 'semantic-ui-react';
-import Footer from './shared/Footer'
+import Navigator from './navigator/Navigator'
+import ApplicationFooter from './shared/Footer'
 import firebase from 'firebase/'
-import { storageConfig } from './shared/config';
+import { storageConfig } from './shared/config'
+import { Layout } from 'antd';
+const { Header, Footer, Sider, Content } = Layout;
 
 class App extends Component {
 
@@ -14,10 +15,10 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-          <Navigator />
-        <Footer />
-      </div>
+      <Layout>
+        <Content><Navigator /></Content>
+        <Footer style={{margin: 0, padding: 0}}><ApplicationFooter /></Footer>
+      </Layout>
     );
   }
 }

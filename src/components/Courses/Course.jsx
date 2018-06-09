@@ -12,6 +12,8 @@ import axios from 'axios'
 import { apis, colors } from '../../shared/config';
 import Loading from "../../shared/Loader"
 import MediaQuery from 'react-responsive'
+import { Tabs, Radio } from 'antd';
+const TabPane = Tabs.TabPane;
 
 export default class Course extends React.Component {
 
@@ -34,7 +36,7 @@ export default class Course extends React.Component {
 
     loadCourse() {
         let courseId = this.props.match.params.id;
-        axios.get(apis.courses + "/" + courseId)
+        axios.get(apis.courses + courseId)
             .then((response) => {
                 this.setState({ loading: false, course: response.data })
             })
@@ -55,7 +57,7 @@ export default class Course extends React.Component {
     render() {
 
         let { loading, loadingMessage, course } = this.state
-        
+
         console.log(course)
 
         return (
@@ -74,21 +76,21 @@ export default class Course extends React.Component {
 
                     <Row>
 
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
                             {
                                 course ?
-                                
-                                <CourseActivities ref="activities" course={course} /> : null
+
+                                    <CourseActivities ref="activities" course={course} /> : null
 
                             }
-                            
+
                         </Col>
 
                         <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
                             {this.renderMainContent()}
                         </Col>
 
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
                         </Col>
 
                     </Row>
@@ -130,11 +132,33 @@ export default class Course extends React.Component {
             { menuItem: 'Unsubscribe', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
         ]
 
+        let tabpanes = [
+            { title: 'Files', content: <CourseFiles course={course} updateCourse={this.updateCourse} /> },
+            { title: 'Students', content: <CourseStudents course={course} /> },
+            { title: 'Assignments', content: <CourseAssignments course={course} updateCourse={this.updateCourse} /> },
+            { title: 'Progress', content: <CourseProgress course={course} /> },
+            { title: 'Info', content: <CourseInfo course={course} /> },
+            { title: 'Unsubscribe', content: <CourseInfo course={course} /> },
+        ]
+
         return (
             <div>
                 <h5>path: {this.props.match.path}</h5>
                 <h2>{course.name}</h2>
-                <Tab menu={{ color: 'blue', secondary: true, pointing: true }} panes={panes} defaultActiveIndex={0} />
+
+                <Tabs
+                    defaultActiveKey="1"
+                    tabPosition="top">
+
+                    {
+                        tabpanes.map((pane, index) =>
+
+                            <TabPane tab={pane.title} key={index}>{pane.content}</TabPane>
+
+                        )
+                    }
+                </Tabs>
+
             </div>
         )
     }

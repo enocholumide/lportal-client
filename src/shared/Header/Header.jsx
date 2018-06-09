@@ -49,7 +49,7 @@ class Header extends Component {
     render() {
 
         return (
-            <div style={{backgroundColor: "#FAFAFA", borderBottomColor: '#757575', borderBottomWidth: 1}}>
+            <div style={{backgroundColor: colors.header, borderBottomColor: '#757575', borderBottomWidth: 1}}>
 
                 <Row style={{backgroundColor: '#424242'}}>
                     <Col sm="12" lg={{ size: 8, offset: 2 }} >

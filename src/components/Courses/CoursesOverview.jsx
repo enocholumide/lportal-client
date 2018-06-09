@@ -44,7 +44,7 @@ export default class CoursesOverview extends Component {
         let { loading, loadingMessage } = this.state;
 
         return (
-            <div style={{ backgroundColor: colors.muteColor }}>
+            <div style={{ backgroundColor: colors.mute }}>
                 <HeaderNavigator activeIndex={6} />
 
                 <h2 style={{ margin: 20 }}>Overview</h2>
@@ -61,14 +61,14 @@ export default class CoursesOverview extends Component {
 
                     <Row>
 
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
                         </Col>
 
                         <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
                             {this.renderMainContent()}
                         </Col>
 
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.muteColor }}>
+                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
                         </Col>
 
                     </Row>

@@ -24,7 +24,7 @@ export default class CourseStudents extends React.Component {
     loadStudents() {
 
         ///api/courses/{id}/students
-        let request = "" + apis.courses + "/" + this.props.course.id + "/students"
+        let request = "" + apis.courses + this.props.course.id + "/students"
 
         axios.get(request)
             .then((response) => {

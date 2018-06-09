@@ -10,8 +10,8 @@ class Exams extends Component {
         return (
             <div>
                 <HeaderNavigator activeIndex={5} />
-                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.muteColor }}>
-                    <Jumbotron style={{ margin: 100 }}>
+                <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.mute }}>
+                    <Jumbotron >
                         <h1 className="display-3">Exams</h1>
                         <p className="lead">Upcoming and registered exams will show here. Students can register or cancel an exam too. Working on it! :)</p>
                         <hr className="my-2" />

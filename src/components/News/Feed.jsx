@@ -119,7 +119,7 @@ class Feeds extends Component {
 
             // /api/news/{news_id}/comments/add/applicationUser/{user_id}
 
-            let reply = "" + apis.news + "/" + feed.id + "/comments/add/applicationUser/" + currentapplicationUser
+            let reply = "" + apis.news + feed.id + "/comments/add/applicationUser/" + currentapplicationUser
 
             axios
                 .put(reply,

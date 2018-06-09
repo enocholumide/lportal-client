@@ -7,6 +7,7 @@ import axios from 'axios'
 import swal from 'sweetalert'
 import CreateNewAssignment from './CreateNewAssignment'
 import { apis } from '../../shared/config'
+import { message } from 'antd';
 
 
 
@@ -169,13 +170,13 @@ export default class Assignment extends React.Component {
 
         // /api/courses/{id}/assignment/{a_id}/submissions/{s_id}
 
-        let handins = "" + apis.courses + "/" + course.id + "/assignment/" + assignment.id + "/submissions/" + 1 // 1 -> Current student ID
+        let handins = "" + apis.courses + course.id + "/assignment/" + assignment.id + "/submissions/" + 1 // 1 -> Current student ID
 
         axios.get(handins)
             .then((response) => {
-                if(response.status === 200){
+                if (response.status === 200) {
                     this.setState({ handIns: response.data, open: !this.state.open })
-                }                
+                }
                 else if (response.status === 403) {
                     swal({
                         title: "Oh oh!",
@@ -233,7 +234,7 @@ export default class Assignment extends React.Component {
 
                         // /api/courses/{c_id}/assignments/{a_id}/delete/{u_id}
 
-                        let del = "" + apis.courses + "/" + course.id + "/assignments/" + assignment.id + "/delete/" + teacherID;
+                        let del = "" + apis.courses + course.id + "/assignments/" + assignment.id + "/delete/" + teacherID;
 
                         axios.delete(del)
                             .then((response) => {
@@ -242,11 +243,13 @@ export default class Assignment extends React.Component {
 
                                     this.setState({ assignments: response.data, loading: false })
                                     if (this.props.updateAssignmentList) { this.props.updateAssignmentList(response.data) }
-                                    swal({ title: "Deleted", text: "Assigment have been deleted and all hand-ins have been removed", icon: "error", button: "Close" })
+                                    message.info("Assigment have been deleted and all hand-ins have been removed")
+                                    //swal({ title: "Deleted", text: "Assigment have been deleted and all hand-ins have been removed", icon: "error", button: "Close" })
                                     this.props.other.updateCourse(["activities"])
 
                                 } else
-                                    swal("Could not delete, aborting");
+                                    message.info("Could not delete, aborting")
+                                    //swal("Could not delete, aborting");
 
                             })
                             .catch((error) => {
@@ -278,7 +281,7 @@ export default class Assignment extends React.Component {
                         case "delete":
 
                             //
-                            let submission = "" + apis.courses + "/handin/delete/"+ handIn.id // -> Student ID
+                            let submission = "" + apis.courses + "handin/delete/" + handIn.id // -> Student ID
 
                             axios.delete(submission)
                                 .then((response) => {
@@ -450,7 +453,7 @@ export default class Assignment extends React.Component {
                     let fp = { name: file.name, url: downloadURL, size: file.size, type: file.type }
                     // Upload to server
                     // /api/courses/{id}/assignment/{a_id}/submit/{s_id}
-                    let submission = "" + apis.courses + "/"+ course.id + "/assignment/" + assignment.id + "/submit/" + 1 // -> Student ID
+                    let submission = "" + apis.courses + course.id + "/assignment/" + assignment.id + "/submit/" + 1 // -> Student ID
                     axios.put(submission, fp)
                         .then((response) => {
                             if (response.status === 200) {

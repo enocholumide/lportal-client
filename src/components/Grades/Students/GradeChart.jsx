@@ -1,13 +1,15 @@
-import React, { Component } from 'react';
-import { View, Animated, Text, StyleSheet } from 'react-native-web';
-import { apis } from '../../shared/config';
+import React, { Component } from 'react'
+import { View, Animated, Text, StyleSheet } from 'react-native-web'
+import { apis } from '../../../shared/config'
 import axios from 'axios'
-import Loading from '../../shared/Loader';
+import Loading from '../../../shared/Loader'
+import { Progress } from 'antd'
+import 'antd/dist/antd.css'
+
 
 class GradeChart extends Component {
     constructor(props) {
         super(props)
-        this.setWidth = this.setWidth.bind(this)
         this.state = {
             isLoading: true,
             width: -1,
@@ -19,25 +21,14 @@ class GradeChart extends Component {
     /**
      * Component lifecycle method
      * Here
-     * 1. The dimension of the chart area is updated
-     * 2. The course statistics is retirevd from the server
-     * 3. A window listener is attached, so that the chart area is updated on resize of the window
+     * 1. The course statistics is retirevd from the server
      */
     async componentDidMount() {
 
-        this.updateDimensions()
         await this.loadStatistics(this.props.grade);
-        window.addEventListener("resize", this.updateDimensions.bind(this));
 
     }
 
-    /**
-     * Component lifecycle method
-     * Here the window listener is removed
-     */
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.updateDimensions.bind(this));
-    }
 
     /**
      * Main Render method
@@ -49,7 +40,7 @@ class GradeChart extends Component {
         return (
             <div>
                 {
-                    (width < 0 || stats === undefined) ?
+                    ( stats === undefined) ?
 
                         <View style={{ height: 100 }}>
 
@@ -59,56 +50,40 @@ class GradeChart extends Component {
 
                         :
 
-                        this.renderChart()
+                        this.renderBetterChart()
 
                 }
             </div>
         );
     }
-   
-    /**
-     * 
-     */
-    renderChart = () => {
+
+    renderBetterChart = () => {
 
         let { stats } = this.state;
         let gradesArrayWithWidths = this.calculateGradeWidth(stats.details);
 
         return (
-            <View style={{ marginVertical: 15 }}>
+            <div>
 
                 {
                     gradesArrayWithWidths.map((grade, index) => (
 
-                        <View style={styles.item}
+                        <View style={{flex: 1, flexDirection: "column"}}
                             key={index}>
-                            <Text style={styles.label}>{grade.gradeLevel} {this.props.grade.gradeLevel === grade.gradeLevel ? " (including your performance)" : ""}</Text>
-                            <View style={styles.data}>
-                                {
-                                    <Animated.View style={[styles.bar, styles.points, { width: grade.width, backgroundColor: this.props.grade.gradeLevel === grade.gradeLevel ? "blue" : "red" }]} />
-                                }
-                                <Text style={styles.dataNumber}>{grade.count}</Text>
-                            </View>
-                        </View>
 
+                            <Text style={styles.label}>{grade.gradeLevel} {this.props.grade.gradeLevel === grade.gradeLevel ? " (including your performance)" : ""}</Text>
+                            <View style={{flex: 1, flexDirection: "row", justifyContent:"space-between", alignItems:"center"}}>
+                                <Progress percent={grade.width} showInfo={false} status={this.props.grade.gradeLevel === grade.gradeLevel ? "active" : "normal" }/>
+                                <Text style={styles.label}>{grade.count}</Text>
+                            </View>
+                            
+                        </View>
                     ))
                 }
-
-                <View style={{ flexDirection: "row", justifyContent: "center" }}>
-
-                    <Text>Average: {stats.averageGrade} | Enrolled: {stats.enrolled} students</Text>
-
-                </View>
-
-            </View>
+            </div>
         )
-    }
 
-    /**
-     * Updates the dimensions of the chart area
-     */
-    updateDimensions() {
-        setTimeout(this.measureWidth.bind(this))
+
     }
 
     /**
@@ -116,7 +91,7 @@ class GradeChart extends Component {
      * Uses the course ID in the grade to get the statistics
      * @param {Object} grade graade
      */
-    loadStatistics(grade){
+    loadStatistics(grade) {
 
         // Set the loading to false so that the loading message can appear 
         this.setState({ isLoading: true })
@@ -135,31 +110,11 @@ class GradeChart extends Component {
     }
 
     /**
-     * Measures the wdith of the chart area
-     */
-    measureWidth() {
-        this.props.component.measure(this.setWidth);
-    }
-
-    /**
-     * Sets the width of the chart area
-     * @param {Number} ox 
-     * @param {Number} oy 
-     * @param {Number} width 
-     * @param {Number} height 
-     * @param {Number} px 
-     * @param {Number} py 
-     */
-    setWidth(ox, oy, width, height, px, py) {
-        this.setState({ width: width });
-    }
-
-    /**
      * Calculates the width of each grade in the bar chart
      * @param {*} gradesArray  the grades array from the server
      * @returns the same gradesarray but with calculated width for each entry in the array
      */
-    calculateGradeWidth(details){
+    calculateGradeWidth(details) {
 
         // 0. Map the grades to an array
         let gradesArray = this.mapGradesToArray(details)
@@ -168,7 +123,7 @@ class GradeChart extends Component {
         let { stats, width } = this.state;
 
         // 2. Reduce the max width 10 percent of the total width of the chart area, to allow labels on top
-        let maxWidth = width - (width * 0.1); // 
+        let maxWidth = 100; // 
 
         // 3. Loop through each grade
         for (let grade of gradesArray) {
@@ -177,10 +132,11 @@ class GradeChart extends Component {
             let gradeWidth = (grade.count * maxWidth / stats.maximumCount)
 
             // 3.2 Just to show something, if the gradeWidth is zero make the wodth equals to 5
-            if (gradeWidth < 5) { gradeWidth = 5 }
+            if (gradeWidth === 0) { gradeWidth = 2 }
 
             // 3.3 Add the calculated width to the object
             grade.width = gradeWidth;
+
         }
 
         // 4. Return the edited gradearray, note that the calculated width is now inside each grade
@@ -188,20 +144,20 @@ class GradeChart extends Component {
 
     }
 
-        /**
-     * Map the details from the server to an array object
-     * @param {Object} details object array from the server
-     */
+    /**
+ * Map the details from the server to an array object
+ * @param {Object} details object array from the server
+ */
     mapGradesToArray(details) {
         let gradesArray = [];
 
         for (const key of Object.keys(details)) {
-            gradesArray.push({ gradeLevel: key, count: details[key], width: 0 })
+            gradesArray.push({ gradeLevel: key, count: details[key], width: 0, percent: 0 })
         }
 
         return gradesArray
     }
-    
+
 }
 
 const styles = StyleSheet.create({

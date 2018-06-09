@@ -1,17 +1,13 @@
-import React, { Component } from 'react';
-import {Container, Dimmer, Loader} from 'semantic-ui-react'
+import React, { Component } from 'react'
+import { Spin } from 'antd'
 
-class Loading extends Component {
+export default class Loading extends Component {
 
     render() {
         return (
-            <Container style={{ flex: 1 }}>
-                <Dimmer active>
-                    <Loader content={this.props.text} />
-                </Dimmer>
-            </Container>
+            <div style={{ padding: 80, textAlign: 'center', justifyContent: 'center', alignItems: 'center', flex: 1, height: '100%' }}>
+                <Spin size="large" tip={this.props.text} />
+            </div>
         );
     }
 }
-
-export default Loading;

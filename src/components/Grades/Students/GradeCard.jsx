@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Animated } from 'react-native-web';
 import { Icon } from 'semantic-ui-react';
+import { Card } from 'antd'
 import GradeChart from './GradeChart'
 
 class Grade extends Component {
 
     state = {
-        open: false,
+        open: true,
         chartGrades: undefined
     };
 
@@ -66,9 +67,9 @@ class Grade extends Component {
     showChart() {
 
         let indicators = [{ grade: 'A', count: 5 }, { grade: 'B', count: 5 }]
-        
 
-        this.refs.chart.measure((ox, oy, width, height) => 
+
+        this.refs.chart.measure((ox, oy, width, height) =>
             this.grades = this.getWidth(indicators, width)
             //this.setState({ chartGrades: grades, open: true });
 
@@ -103,40 +104,27 @@ class Grade extends Component {
 
             <div>
 
-                <TouchableOpacity >
-
-                    <View
-
-                        style={{
-                            flexDirection: 'row', justifyContent: 'space-between',
-                            alignItems: 'center', padding: 10, borderColor: 'lightgray',
-                            borderRadius: 3, borderWidth: 1, marginVertical: 10
-                        }}>
-
-                        <label >{grade.course.name}</label>
+                <Card title={grade.course.name}
+                    extra={
                         <View style={{ flexDirection: 'row' }}>
                             <label>{grade.score + " " + grade.gradeLevel}</label>
                             <Icon name="info circle" color="blue" style={{ marginLeft: 5 }} onClick={() => this.setState({ open: !this.state.open })} />
-                        </View>
+                        </View>}> {grade.course.code}
 
-                    </View>
-
-                </TouchableOpacity>
-
-                <View style={{ flexDirection: 'column', flex: 1 }} ref="chart">
+                        
 
                     {
                         this.state.open ?
 
 
-                            <GradeChart grade={grade} component={this.refs.chart}/>
+                            <GradeChart grade={grade}  />
 
 
 
                             : null
                     }
 
-                </View>
+                </Card>
 
             </div>
 
