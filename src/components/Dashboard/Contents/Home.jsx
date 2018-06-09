@@ -54,7 +54,7 @@ export default class Home extends Component {
                     <Card title="ANALYTICS" extra={<a href="">View all</a>} style={{ backgroundColor: 'white', marginBottom: '24px', padding: 0 }}>
 
                         <List
-                            grid={{ gutter: 16, xs: 3, sm: 3, md: 3, lg: 3, xl: 3, xxl: 3 }}
+                            grid={{ gutter: 16, xs: 2, sm: 2, md: 2, lg: 3, xl: 3, xxl: 3 }}
                             dataSource={analytics}
                             renderItem={(item, index) => (
                                 <List.Item>
