@@ -1,7 +1,8 @@
 import React from 'react'
 import { Icon, List, Button,Dropdown, Message } from 'semantic-ui-react'
 import axios from 'axios'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/database'
 import { Progress } from 'reactstrap'
 import moment from 'moment'
 import swal from 'sweetalert'
@@ -220,7 +221,7 @@ export default class CourseFiles extends React.Component {
 
                     () => {
                         uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                            console.log('File available at', downloadURL);
+                            //console.log('File available at', downloadURL);
 
                             let fp = { name: file.name, url: downloadURL, size: file.size, type: file.type }
                             let teacherID = 3 // STAFFFFFF

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Message } from 'semantic-ui-react'
-import { List, Avatar, Divider, Spin, Alert } from 'antd'
+import { List, Divider, Spin, Alert } from 'antd'
 
 import TeacherGradingCard from './TeacherGradingCard'
 import axios from 'axios'
@@ -50,21 +50,6 @@ export default class TeacherGradingArea extends Component {
     }
 
     renderTeacherArea = () => {
-
-        const data = [
-            {
-                title: 'Course title 1',
-            },
-            {
-                title: 'Course title 1 2',
-            },
-            {
-                title: 'Course title 1 3',
-            },
-            {
-                title: 'Course title 1 4',
-            },
-        ];
 
         let { loading, loadingMessage, courses } = this.state
 

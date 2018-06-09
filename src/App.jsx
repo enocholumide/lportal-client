@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import './App.css';
 import Navigator from './navigator/Navigator'
 import ApplicationFooter from './shared/Footer'
-import firebase from 'firebase/'
+import firebase from 'firebase/app'
+import 'firebase/database'
 import { storageConfig } from './shared/config'
 import { Layout } from 'antd';
-const { Header, Footer, Sider, Content } = Layout;
+const { Footer, Content } = Layout;
 
 class App extends Component {
 

@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import { apis } from '../../../shared/config'
-import { List, Avatar, Button, Spin, Alert, Form, Icon, Input, InputNumber, Col, Table } from 'antd';
-const InputGroup = Input.Group;
-const FormItem = Form.Item;
+import { List, Avatar, Button, Spin, Alert, InputNumber, Table } from 'antd';
 
 class TeacherGradingCard extends Component {
 
@@ -52,7 +50,7 @@ class TeacherGradingCard extends Component {
     }
 
     onGradeChange(v) {
-        console.log(v)
+       // console.log(v)
 
     }
 
@@ -97,7 +95,7 @@ class TeacherGradingCard extends Component {
     }
 
     saveChanges(){
-        
+
     }
 
 

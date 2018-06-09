@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import HeaderNavigator from '../../shared/Header/Header'
 import { Dropdown, Container } from 'semantic-ui-react'
 import axios from 'axios'
-import { View } from 'react-native-web'
 import { Row, Col } from 'reactstrap'
 import { colors } from '../../shared/appStyles'
 import Loading from "../../shared/Loader"

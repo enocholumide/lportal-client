@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
-import {
-    Icon, Image,
-    Menu,
-    Tab
-} from 'semantic-ui-react';
-import 'semantic-ui-css/semantic.min.css';
-import { Link } from 'react-router-dom';
-import MediaQuery from 'react-responsive'
-import { View } from 'react-native-web';
-import {colors} from '../config'
+import React, { Component } from 'react'
+import { Image } from 'semantic-ui-react'
+import 'semantic-ui-css/semantic.min.css'
+import { colors } from '../config'
 
 import {
     Collapse,
@@ -22,12 +15,8 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem,
-    Row, Col, TabContent, TabPane, Card, Button, CardTitle, CardText,
-} from 'reactstrap';
-import classnames from 'classnames';
-
-
-const header_icons_color = '#BDBDBD';
+    Row, Col,
+} from 'reactstrap'
 
 class Header extends Component {
 
@@ -49,9 +38,9 @@ class Header extends Component {
     render() {
 
         return (
-            <div style={{backgroundColor: colors.header, borderBottomColor: '#757575', borderBottomWidth: 1}}>
+            <div style={{ backgroundColor: colors.header, borderBottomColor: '#757575', borderBottomWidth: 1 }}>
 
-                <Row style={{backgroundColor: '#424242'}}>
+                <Row style={{ backgroundColor: '#424242' }}>
                     <Col sm="12" lg={{ size: 8, offset: 2 }} >
                         <Navbar dark expand="md" >
                             <NavbarBrand href="/">
@@ -165,63 +154,6 @@ const panes2 = [
     { link: "/courses", icon: "student  ", title: "Courses" },
     { link: "/jobs", icon: "suitcase", title: "Jobs" },
     { link: "/info", icon: "info", title: "Info" },
-]
-
-const panes = [
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/dashboard' key='news'><Icon name='setting' style={{ color: header_icons_color }} />
-                Dashboard
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/news' key='dashboard'><Icon name='feed' style={{ color: header_icons_color }} />
-                News
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/people' key='people'><Icon name='users' style={{ color: header_icons_color }} />
-                People
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/lectures' key='lectures'><Icon name='student' style={{ color: header_icons_color }} />
-                Lectures
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/grades' key='grades'><Icon name='pencil square' style={{ color: header_icons_color }} />
-                Grades
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/exams' key='exams'><Icon name='pencil square' style={{ color: header_icons_color }} />
-                Exams
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/courses' key='courses'><Icon name='student' style={{ color: header_icons_color }} />
-                My Courses
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/jobs' key='jobs'><Icon name='suitcase' style={{ color: header_icons_color }} />
-                Jobs
-            </Menu.Item>
-    },
-    {
-        menuItem:
-            <Menu.Item as={Link} to='/info' key='info'><Icon name='info' style={{ color: header_icons_color }} />
-                Info
-            </Menu.Item>
-    },
 ]
 
 export default Header;

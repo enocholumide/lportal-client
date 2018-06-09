@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Calendar, Badge, Divider } from 'antd';
+import { Calendar, Badge } from 'antd';
 import { colors } from '../../../shared/config'
-import { Text } from 'react-native-web'
 import Loading from '../../../shared/Loader'
 
 export default class StudentCalendar extends Component {

@@ -41,8 +41,6 @@ export default class CoursesOverview extends Component {
 
     render() {
 
-        let { loading, loadingMessage } = this.state;
-
         return (
             <div style={{ backgroundColor: colors.mute }}>
                 <HeaderNavigator activeIndex={6} />

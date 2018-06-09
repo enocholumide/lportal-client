@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Message, Container } from 'semantic-ui-react'
+import { Message } from 'semantic-ui-react'
 import { colors, apis, current_student_id } from '../../../shared/config.js'
 import axios from 'axios'
 import GradeCard from './GradeCard'
 import moment from 'moment'
-import { List, Avatar, Button, Spin, Alert } from 'antd'
+import { Spin, Alert } from 'antd'
 
 
 export default class StudentGradesArea extends Component {

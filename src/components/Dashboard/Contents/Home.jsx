@@ -21,7 +21,6 @@ export default class Home extends Component {
 
     render() {
 
-        let marginTop = 30
         const data = [{ title: "Assignments" }, { title: "Lectures" }, { title: "Events" }, { title: "Todos" }];
         const analytics = [{ title: "Assignments", percent: 100 }, { title: "Exams", percent: 30 }, { title: "Projects", percent: 70 }]
         const academics = this.getAcademicsStats();
@@ -38,7 +37,7 @@ export default class Home extends Component {
 
                 <div style={{ padding: '24px' }}>
 
-                    <Card title="ACADEMICS" extra={<a href="#">View all</a>} style={{ backgroundColor: colors.mute, marginBottom: '24px', padding: 0 }}>
+                    <Card title="ACADEMICS" extra={<a href="">View all</a>} style={{ backgroundColor: colors.mute, marginBottom: '24px', padding: 0 }}>
 
                         <List
                             grid={{ gutter: 10, xs: 1, sm: 1, md: 1, lg: 3, xl: 3, xxl: 3 }}
@@ -52,30 +51,35 @@ export default class Home extends Component {
 
                     </Card>
 
-                    <List
-                        grid={{ gutter: 16, xs: 3, sm: 3, md: 3, lg: 3, xl: 3, xxl: 3 }}
-                        dataSource={analytics}
-                        renderItem={item => (
-                            <List.Item>
-                                <View style={{ alignItems: 'center', flex: 1, flexDirection: 'column' }}>
-                                    <Progress type="circle" percent={item.percent} />
-                                    <p style={{ color: colors.accent, fontWeight: 'bold', margin: 10 }}>{item.title}</p>
-                                </View>
-                            </List.Item>
-                        )}
-                    />
+                    <Card title="ANALYTICS" extra={<a href="">View all</a>} style={{ backgroundColor: 'white', marginBottom: '24px', padding: 0 }}>
+
+                        <List
+                            grid={{ gutter: 16, xs: 3, sm: 3, md: 3, lg: 3, xl: 3, xxl: 3 }}
+                            dataSource={analytics}
+                            renderItem={(item, index) => (
+                                <List.Item>
+                                    <View style={[{ alignItems: 'center', flex: 1, flexDirection: 'column' },
+                                    index === 1 ? { borderRightWidth: 1, borderLeftWidth: 1, borderColor: 'lightgray' } : {}]}>
+                                        <Progress type="circle" percent={item.percent} />
+                                        <p style={{ color: colors.accent, fontWeight: 'bold', margin: 10 }}>{item.title}</p>
+                                    </View>
+                                </List.Item>
+                            )}
+                        />
+
+                    </Card>
 
                     <List
                         grid={{ gutter: 16, xs: 1, sm: 1, md: 1, lg: 2, xl: 2, xxl: 2 }}
                         dataSource={data}
                         renderItem={item => (
                             <List.Item>
-                                <Card title={item.title} extra={<a href="#">View all</a>}>
-                                    <div style={{height: 150}}>
+                                <Card title={item.title} extra={<a href="">View all</a>}>
+                                    <div style={{ height: 150 }}>
 
                                         {this.getContent(item.title)}
 
-                                        </div>
+                                    </div>
 
                                 </Card>
                             </List.Item>
@@ -89,19 +93,19 @@ export default class Home extends Component {
     getContent(key) {
 
         //if (key.toUpperCase() === "TODOS") {
-            return (
+        return (
 
-                <Steps direction="vertical" size="small" current={1}>
-                    <Steps.Step title="Finished" description="This is a description." />
-                    <Steps.Step title="In Progress" description="This is a description." />
-                    <Steps.Step title="Waiting" description="This is a description." />
-                </Steps>
+            <Steps direction="vertical" size="small" current={1}>
+                <Steps.Step title="Finished" description="This is a description." />
+                <Steps.Step title="In Progress" description="This is a description." />
+                <Steps.Step title="Waiting" description="This is a description." />
+            </Steps>
 
-            )
+        )
         //} else
-           // return (
-           //     <p>COntent</p>
-          //  )
+        // return (
+        //     <p>COntent</p>
+        //  )
 
     }
 

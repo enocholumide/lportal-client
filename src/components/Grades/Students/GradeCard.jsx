@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Animated } from 'react-native-web';
+import { View } from 'react-native-web';
 import { Icon } from 'semantic-ui-react';
 import { Card } from 'antd'
 import GradeChart from './GradeChart'
@@ -56,7 +56,7 @@ class Grade extends Component {
             if (width < 5) { width = 5 }
 
             // Add computed the width to the object
-            item.width = new Animated.Value(width);
+            item.width = width;
 
         }
 
@@ -75,8 +75,6 @@ class Grade extends Component {
 
             //console.log(this.state)
         );
-
-        console.log(this.grades)
 
         return (
             <View style={{ flexDirection: 'column', flex: 1 }}>

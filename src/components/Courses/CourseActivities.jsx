@@ -9,8 +9,6 @@ export default class CourseActivities extends React.Component {
     constructor(props) {
         super(props)
 
-        console.log(this.props)
-
         this.state = {
             activities: []
         }

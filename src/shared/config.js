@@ -1,4 +1,4 @@
-const DEV = "http://localhost:8080/api/"
+//const DEV = "http://localhost:8080/api/"
 const PROD = "https://lportal.herokuapp.com/api/"
 
 export const prefix = PROD

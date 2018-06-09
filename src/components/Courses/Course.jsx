@@ -1,7 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import HeaderNavigator from '../../shared/Header/Header';
-import { Tab } from 'semantic-ui-react';
+import HeaderNavigator from '../../shared/Header/Header'
 import CourseFiles from './CourseFiles'
 import CourseActivities from './CourseActivities'
 import CourseStudents from './CourseStudents'
@@ -12,7 +11,7 @@ import axios from 'axios'
 import { apis, colors } from '../../shared/config';
 import Loading from "../../shared/Loader"
 import MediaQuery from 'react-responsive'
-import { Tabs, Radio } from 'antd';
+import { Tabs } from 'antd';
 const TabPane = Tabs.TabPane;
 
 export default class Course extends React.Component {
@@ -56,9 +55,7 @@ export default class Course extends React.Component {
 
     render() {
 
-        let { loading, loadingMessage, course } = this.state
-
-        console.log(course)
+        let { course } = this.state
 
         return (
             <div>
@@ -102,7 +99,7 @@ export default class Course extends React.Component {
 
     renderMainContent() {
 
-        let { loading, loadingMessage, course } = this.state
+        let { loading, loadingMessage } = this.state
 
 
         return (
@@ -122,15 +119,6 @@ export default class Course extends React.Component {
     renderCourse() {
 
         let { course } = this.state;
-
-        let panes = [
-            { menuItem: 'Files', render: () => <Tab.Pane>{<CourseFiles course={course} updateCourse={this.updateCourse} />}</Tab.Pane> },
-            { menuItem: 'Students', render: () => <Tab.Pane>{<CourseStudents course={course} />}</Tab.Pane> },
-            { menuItem: 'Assignments', render: () => <Tab.Pane>{<CourseAssignments course={course} updateCourse={this.updateCourse} />}</Tab.Pane> },
-            { menuItem: 'Progress', render: () => <Tab.Pane>{<CourseProgress course={course} />}</Tab.Pane> },
-            { menuItem: 'Info', render: () => <Tab.Pane>{<CourseInfo course={course} />}</Tab.Pane> },
-            { menuItem: 'Unsubscribe', render: () => <Tab.Pane>Tab 3 Content</Tab.Pane> },
-        ]
 
         let tabpanes = [
             { title: 'Files', content: <CourseFiles course={course} updateCourse={this.updateCourse} /> },

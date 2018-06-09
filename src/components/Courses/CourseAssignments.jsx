@@ -3,9 +3,8 @@ import { Message, List, Divider, Icon } from 'semantic-ui-react'
 import Assignment from './Assignment'
 import Loading from "../../shared/Loader";
 import axios from 'axios';
-import { Container, Row, Col } from 'reactstrap'
+import { Container } from 'reactstrap'
 import CreateNewAssignment from './CreateNewAssignment'
-import swal from 'sweetalert';
 import { apis } from '../../shared/config';
 
 export default class CourseAssignments extends React.Component {
@@ -54,17 +53,14 @@ export default class CourseAssignments extends React.Component {
         let { assignments } = this.state
         assignments = [];
         assignments = newList
-        
+
         this.setState({ assignments: assignments })
         this.props.updateCourse(["activities"])
-
-        console.log(this.state.assignments)
-
     }
 
     render() {
 
-        let { assignments, loading, loadingMessage } = this.state
+        let { loading, loadingMessage } = this.state
 
         return (
             <div >
@@ -90,7 +86,7 @@ export default class CourseAssignments extends React.Component {
      */
     showAssignments() {
 
-        let { assignments, teacher, opennew } = this.state
+        let { teacher } = this.state
 
         return (
             <Container>
@@ -172,7 +168,7 @@ export default class CourseAssignments extends React.Component {
                                 {
                                     assignments.map((assignment, index) =>
                                         <List.Item key={index} style={{ padding: 10 }}>
-                                            <Assignment key={index} course={this.props.course} assignment={assignment} teacher={this.state.teacher} updateAssignmentList={this.updateAssignmentList} other={this.props}/>
+                                            <Assignment key={index} course={this.props.course} assignment={assignment} teacher={this.state.teacher} updateAssignmentList={this.updateAssignmentList} other={this.props} />
                                         </List.Item>
 
                                     )

@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'reactstrap'
-import { View } from 'react-native-web'
-import { Message, Container } from 'semantic-ui-react'
+import { Container } from 'semantic-ui-react'
 import HeaderNavigator from '../../shared/Header/Header'
-import { colors, apis, current_student_id } from '../../shared/config.js'
-import axios from 'axios'
-import Loading from '../../shared/Loader'
+import { colors } from '../../shared/config.js'
 import MediaQuery from 'react-responsive'
-
-import {Divider, Layout} from 'antd'
+import { Divider } from 'antd'
 import StudentsGradeArea from './Students/StudentGradesArea'
 import TeacherGradingArea from './Teachers/TeacherGradingArea'
 

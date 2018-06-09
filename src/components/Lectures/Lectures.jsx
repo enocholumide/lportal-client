@@ -41,8 +41,8 @@ class Lecture extends Component {
 
                 if (coursesResponse.status === 200 && departmentsResponse.status === 200) {
 
-                    console.log(coursesResponse.data)
-                    console.log(departmentsResponse.data)
+                    //console.log(coursesResponse.data)
+                    //console.log(departmentsResponse.data)
 
 
                     let departmentDropdown = this.mapDepartmentsToDropDownList(departmentsResponse.data);

@@ -1,7 +1,8 @@
 import React from 'react'
 import { Message, List, Icon, Button, Table, Divider, Checkbox, Dropdown } from 'semantic-ui-react'
 import moment from 'moment'
-import firebase from 'firebase'
+import firebase from 'firebase/app'
+import 'firebase/database'
 import { Progress, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import axios from 'axios'
 import swal from 'sweetalert'
@@ -41,13 +42,13 @@ export default class Assignment extends React.Component {
 
         let { assignment } = this.state;
 
-        assignment.deadline = moment(edited.deadline).format("DD-MM-YYYY"),
-            assignment.type = edited.type,
-            assignment.title = edited.title,
-            assignment.description = edited.description,
-            assignment.notes = edited.notes,
+        assignment.deadline = moment(edited.deadline).format("DD-MM-YYYY")
+        assignment.type = edited.type
+        assignment.title = edited.title
+        assignment.description = edited.description
+        assignment.notes = edited.notes
 
-            this.setState({ assignment: assignment })
+        this.setState({ assignment: assignment })
         this.props.other.updateCourse(["activities"])
 
     }
@@ -249,7 +250,7 @@ export default class Assignment extends React.Component {
 
                                 } else
                                     message.info("Could not delete, aborting")
-                                    //swal("Could not delete, aborting");
+                                //swal("Could not delete, aborting");
 
                             })
                             .catch((error) => {
@@ -448,7 +449,7 @@ export default class Assignment extends React.Component {
 
             () => {
                 uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-                    console.log('File available at', downloadURL);
+                    //console.log('File available at', downloadURL);
 
                     let fp = { name: file.name, url: downloadURL, size: file.size, type: file.type }
                     // Upload to server

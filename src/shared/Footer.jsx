@@ -18,7 +18,7 @@ class Footer extends Component {
                                     <div className="footer-pad">
                                         <h4>Learning portal</h4>
                                         <ul className="list-unstyled">
-                                            <li><a></a></li>
+                                            
                                             <li><a>Help</a></li>
                                             <li><a>Blog</a></li>
                                         </ul>
@@ -31,7 +31,7 @@ class Footer extends Component {
                                         <ul className="list-unstyled">
                                             <li><a>Email me</a></li>
                                             <a href="mailto:enocholumide@gmail.com">gmail</a>
-                                            <li><a></a></li>
+                                           
                                         </ul>
                                     </div>
                                 </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Animated, Text, StyleSheet } from 'react-native-web'
+import { View, Text, StyleSheet } from 'react-native-web'
 import { apis } from '../../../shared/config'
 import axios from 'axios'
 import Loading from '../../../shared/Loader'
@@ -35,7 +35,7 @@ class GradeChart extends Component {
      */
     render() {
 
-        let { width, stats } = this.state
+        let { stats } = this.state
 
         return (
             <div>
@@ -120,7 +120,7 @@ class GradeChart extends Component {
         let gradesArray = this.mapGradesToArray(details)
 
         // 1. Get variables from state
-        let { stats, width } = this.state;
+        let { stats } = this.state;
 
         // 2. Reduce the max width 10 percent of the total width of the chart area, to allow labels on top
         let maxWidth = 100; // 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Message, Grid } from 'semantic-ui-react';
+import { Form, Message } from 'semantic-ui-react';
 import moment from 'moment';
 import axios from 'axios';
 import swal from 'sweetalert';
@@ -30,8 +30,8 @@ class NewAssignment extends Component {
                 deadline: moment(assignment.deadline).format(DATE_FORMAT),
                 type: assignment.type,
                 title: assignment.title,
-                description: assignment.description,
-                notes: assignment.notes,
+                description: assignment.description ? assignment.description : "" ,
+                notes: assignment.notes ? assignment.notes : "",
             })
         }
     }
@@ -91,7 +91,7 @@ class NewAssignment extends Component {
 
                         if (this.props.callback) { this.props.callback(assignment) }
                         if (this.props.updateAssignmentList) { this.props.updateAssignmentList(response.data) }
-                        console.log(response.data)
+
                     }
                     else {
                         console.log(response)
@@ -114,7 +114,7 @@ class NewAssignment extends Component {
 
     validateFields() {
 
-        const { deadline, type, title, description, notes, } = this.state
+        const { deadline, type, title } = this.state
 
         let active_time = moment.utc(deadline, DATE_FORMAT)
         let current_time = moment.utc(moment(), DATE_FORMAT)
@@ -125,14 +125,11 @@ class NewAssignment extends Component {
             return false
         } else
 
-
-            match = type.match(/([A-Za-z])/g);
         if (type.length < 1) {
             this.setState({ error: 'type' })
             return false
         }
 
-        let match = title.match(/([A-Za-z])/g);
         if (title.length < 6) {
             this.setState({ error: 'title' })
             return false
@@ -147,7 +144,7 @@ class NewAssignment extends Component {
 
     render() {
 
-        const { deadline, type, title, description, notes, message, error } = this.state
+        const { deadline, type, title, description, notes, error } = this.state
 
         return (
 
