@@ -7,7 +7,7 @@ import { Progress } from 'antd'
 import 'antd/dist/antd.css'
 
 
-class GradeChart extends Component {
+export default class GradeChart extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -192,6 +192,5 @@ const styles = StyleSheet.create({
     }
 })
 
-export default GradeChart;
 
 

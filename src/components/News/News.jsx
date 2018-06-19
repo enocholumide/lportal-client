@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import HeaderNavigator from '../../shared/Header/Header'
 import { Dropdown, Container } from 'semantic-ui-react'
 import axios from 'axios'
 import { Row, Col } from 'reactstrap'
@@ -36,7 +35,6 @@ class News extends Component {
         return (
 
             <div>
-                <HeaderNavigator activeIndex={1} />
 
                 {
                     this.state.dataIsReady ?

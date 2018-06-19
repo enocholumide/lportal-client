@@ -1,38 +1,46 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import React, { Component } from 'react';
 
-import Dashboard from '../components/Dashboard/Dashboard';
-import News from '../components/News/News';
-import People from '../components/People/People';
-import Lectures from '../components/Lectures/Lectures';
-import Grades from '../components/Grades/Grades';
-import CoursesOverview from '../components/Courses/CoursesOverview';
-import Course from '../components/Courses/Course';
-import Exams from '../components/Exams/Exams';
-import Jobs from '../components/Jobs/Jobs';
-import Info from '../components/Info/Info';
-
+import Home from '../components/Home/Home';
+import Organisation from '../components/Organisation/Organisation'
+import Organisations from '../components/Organisation/Organisations'
+import Login from '../components/Authentication/Login'
+import { AppContext } from '../provider/DataProvider'
 
 class Navigator extends Component {
+
+    constructor(props) {
+        super(props)
+    }
+
+    componentDidMount() {
+    }
+
     render() {
         return (
-            <div>
-                <Switch>
+            <AppContext.Consumer>
 
-                    <Route exact path="/" component={Dashboard} />
-                    <Route exact path="/dashboard" component={Dashboard} />
-                    <Route path="/news" component={News} />
-                    <Route path="/people" component={People} />
-                    <Route path="/exams" component={Exams} />
-                    <Route path="/lectures" component={Lectures} />
-                    <Route path="/grades" component={Grades} />
-                    <Route path="/courses" component={CoursesOverview} />
-                    <Route exact path="/course/:id" component={Course} />
-                    <Route path="/jobs" component={Jobs} />
-                    <Route path="/info" component={Info} />
+                {(context) => (
 
-                </Switch>
-            </div>
+                    <React.Fragment>
+
+                        <Switch>
+
+                            <Route exact path="/" component={Home} />
+                            <Route exact path="/login" component={Login} />
+                            <Route exact path="/organisations" component={Organisations} />
+                            <Route exact path="/organisation/:id" component={Organisation} />
+
+                        </Switch>
+
+                        
+
+                        {context.checkAuthorization()}
+
+                    </React.Fragment>
+
+                )}
+            </AppContext.Consumer>
         )
     }
 }

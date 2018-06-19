@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col } from 'reactstrap'
 import { Container } from 'semantic-ui-react'
-import HeaderNavigator from '../../shared/Header/Header'
+
 import { colors } from '../../shared/config.js'
 import MediaQuery from 'react-responsive'
 import { Divider } from 'antd'
@@ -15,7 +15,7 @@ class Grade extends Component {
 
         this.state = {
             student: true,
-            teacher: true
+            teacher: false
         }
     }
 
@@ -24,8 +24,6 @@ class Grade extends Component {
         return (
 
             <div className="main">
-
-                <HeaderNavigator activeIndex={4} />
 
                 <MediaQuery maxDeviceWidth={768}>
 

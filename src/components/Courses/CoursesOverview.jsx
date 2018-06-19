@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { colors, apis } from '../../shared/config';
-import HeaderNavigator from '../../shared/Header/Header';
 import { List, Image, Message } from 'semantic-ui-react'
 import { View, ScrollView } from 'react-native-web';
 import { Link } from 'react-router-dom';
@@ -43,7 +42,6 @@ export default class CoursesOverview extends Component {
 
         return (
             <div style={{ backgroundColor: colors.mute }}>
-                <HeaderNavigator activeIndex={6} />
 
                 <h2 style={{ margin: 20 }}>Overview</h2>
 

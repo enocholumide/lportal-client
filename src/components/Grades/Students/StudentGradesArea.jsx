@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { Message } from 'semantic-ui-react'
-import { colors, apis, current_student_id } from '../../../shared/config.js'
+import { colors, apis } from '../../../shared/config.js'
 import axios from 'axios'
 import GradeCard from './GradeCard'
 import moment from 'moment'
-import { Spin, Alert } from 'antd'
-
+import { Alert } from 'antd'
+import Loader from '../../../shared/Loader'
 
 export default class StudentGradesArea extends Component {
 
@@ -15,17 +15,17 @@ export default class StudentGradesArea extends Component {
         this.state = {
             gradesAreReady: false,
             loadingMessage: "A moment, we are fetching your grades",
-            grades: undefined,
-
+            grades: [],
             student: true,
-            teacher: true
+            teacher: true,
+            loading: true
         }
     }
 
 
-    async componentDidMount() {
+    componentDidMount() {
 
-       await this.loadGradesFromServer();
+        this.loadGradesFromServer();
 
     }
 
@@ -36,18 +36,14 @@ export default class StudentGradesArea extends Component {
 
         this.setState({ gradesAreReady: false })
 
-        axios.get(apis.student_grades + current_student_id)
+        axios.get(apis.student_grades + "1")
             .then((response) => {
-
                 if (response.status === 200) { // OK
-
-                    this.setState({ gradesAreReady: true, grades: response.data })
-
+                    this.setState({ gradesAreReady: true, grades: response.data, loading: false })
                 }
-
             })
             .catch((error) => {
-                this.setState({ gradesAreReady: false, loadingMessage: error })
+                this.setState({ gradesAreReady: false, loadingMessage: error.response.data })
             })
     }
 
@@ -56,95 +52,87 @@ export default class StudentGradesArea extends Component {
      */
     render() {
 
-        let { grades, gradesAreReady, loadingMessage } = this.state;
+        let { loadingMessage, loading } = this.state;
 
-        return (
+        if (loading)
 
-            <div style={{backgroundColor: 'white', padding: 10}}>
+            return (<Loader text={loadingMessage.toString()}/>)
 
-                <Message info >
-                    <Message.Header>About your grades: </Message.Header>
-                    <p>Please note:</p>
-                    <Message.List items={[
-                        "You can download and export your current grade as a transcript",
-                        "If you apply for a student job, your current grade will be shared with the lecturer",
-                        "Your grades are only visible to you , unless you share them",
-                        "You may expand each grade and view the course statistics",
-                        "If you feel there is a problem with your grade, please report an issue immediately!"
-                    ]} />
+        else
 
-                </Message>
+            return (
 
-                {!gradesAreReady ?
+                <div style={{ backgroundColor: 'white', padding: 10 }}>
 
-                    <div style={{padding: 80, textAlign: 'center'}}>
-                        <Spin size="large" tip={loadingMessage}/>
-                    </div> 
-                    
-                    : 
-                    
-                    (grades && grades.length) > 0 ?
+                    <Message info >
+                        <Message.Header>About your grades: </Message.Header>
+                        <p>Please note:</p>
+                        <Message.List items={[
+                            "You can download and export your current grade as a transcript",
+                            "If you apply for a student job, your current grade will be shared with the lecturer",
+                            "Your grades are only visible to you , unless you share them",
+                            "You may expand each grade and view the course statistics",
+                            "If you feel there is a problem with your grade, please report an issue immediately!"
+                        ]} />
 
-                    this.renderGrades() :
+                    </Message>
 
-                    <Alert message="No grade found at this time, check again" type="info" showIcon />
-                    
-                }
+                    {this.renderGrades()}
 
-                
+                </div>
 
-            </div>
-
-        )
+            )
     }
 
     renderGrades() {
 
         let { grades } = this.state;
 
-        return (
-            <div>
+        if (grades.length < 1) return (<Alert message="No grade found at this time, check again" type="info" showIcon />)
+        else
+            return (
+                <div>
 
-                {
-                    grades.map((grade, index) =>
+                    {
+                        grades.map((grade, index) =>
 
-                        <div key={index}>
-                            {
-                                index === 0 ?
+                            <div key={index}>
+                                {
+                                    index === 0 ?
 
-                                    <p style={{ padding: 10, marginBottom: 10, backgroundColor: colors.mute }}>
-                                        {this.formatGradeSectionHeader(grade)}
-                                    </p>
+                                        <p style={{ padding: 10, marginBottom: 10, backgroundColor: colors.mute }}>
+                                            {this.formatGradeSectionHeader(grade)}
+                                        </p>
 
-                                    : null
-                            }
+                                        : null
+                                }
 
 
-                            {
-                                index > 0 && (
-                                    grade.course.session !== grades[index - 1].course.session ||
-                                    moment(grade.startDate).format("YY").toString() !== moment(grades[index - 1].startDate).format("YY").toString()
-                                )
+                                {
+                                    index > 0 && (
+                                        grade.course.session !== grades[index - 1].course.session ||
+                                        moment(grade.startDate).format("YY").toString() !== moment(grades[index - 1].startDate).format("YY").toString()
+                                    )
 
-                                    ?
+                                        ?
 
-                                    <p style={{ padding: 10, marginTop: 10, marginBottom: 10, backgroundColor: colors.mute }}>
-                                        {this.formatGradeSectionHeader(grade)}
-                                    </p>
+                                        <p style={{ padding: 10, marginTop: 10, marginBottom: 10, backgroundColor: colors.mute }}>
+                                            {this.formatGradeSectionHeader(grade)}
+                                        </p>
 
-                                    : null
+                                        : null
 
-                            }
+                                }
 
-                            <GradeCard grade={grade} />
+                                <GradeCard grade={grade} />
 
-                        </div>
+                            </div>
 
-                    )
-                }
+                        )
+                    }
 
-            </div>
-        )
+                </div>
+            )
     }
 
     /**

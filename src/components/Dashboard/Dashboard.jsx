@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import HeaderNavigator from '../../shared/Header/Header';
 import { Layout, Menu, Icon, Tabs } from 'antd'
 import MediaQuery from 'react-responsive'
 import { colors } from '../../shared/config'
@@ -56,9 +55,7 @@ class Dashboard extends Component {
 
         return (
             <div>
-                <HeaderNavigator activeIndex={0} />
                 <div>
-
                     <MediaQuery maxDeviceWidth={768}>
 
                         <Tabs defaultActiveKey={this.state.content} tabPosition="top" onChange={(item) => this.setContent(item)}>

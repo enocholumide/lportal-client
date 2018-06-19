@@ -5,6 +5,10 @@ export const prefix = PROD
 
 export const apis = {
     prefix: prefix,
+    signin: prefix + "auth/signin/",
+    signinwithtoken: prefix + "auth/signin/token/",
+    signup: prefix + "auth/signup",
+    organisations: prefix + "organisations/",
     users: prefix + "users/",
     news: prefix + "news/",
     schools: prefix + "schools/",

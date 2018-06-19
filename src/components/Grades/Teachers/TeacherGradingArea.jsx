@@ -6,6 +6,7 @@ import TeacherGradingCard from './TeacherGradingCard'
 import axios from 'axios'
 import { apis } from '../../../shared/config'
 
+let mounted = true
 export default class TeacherGradingArea extends Component {
 
 
@@ -20,24 +21,32 @@ export default class TeacherGradingArea extends Component {
         }
     }
 
-    async componentDidMount() {
-        await this.getTeacherCourses();
+    componentDidMount() {
+        this.getTeacherCourses();
+    }
+
+    componentWillMount() {
+        mounted = false
     }
 
     getTeacherCourses() {
 
-        let courses = apis.teachers + "3/courses"  //http://localhost:8080/api/teacher/3/courses
+        if (mounted) {
 
-        axios.get(courses)
-            .then((response) => {
-                if (response.status === 200) {          
-                    this.setState({ loading: false, courses: response.data })
-                }
-            })
-            .catch((error) => {
-                this.setState({ loading: true, loadingMessage: error })
-                console.log(error)
-            })
+            let courses = apis.teachers + "3/courses"  //http://localhost:8080/api/teacher/3/courses
+
+            axios.get(courses)
+                .then((response) => {
+                    if (response.status === 200) {
+                        this.setState({ loading: false, courses: response.data })
+                    }
+                })
+                .catch((error) => {
+                    this.setState({ loading: true, loadingMessage: error })
+                    console.log(error)
+                })
+
+        }
 
     }
 

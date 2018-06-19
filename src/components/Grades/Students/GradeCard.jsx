@@ -4,7 +4,7 @@ import { Icon } from 'semantic-ui-react';
 import { Card } from 'antd'
 import GradeChart from './GradeChart'
 
-class Grade extends Component {
+export default class GradeCard extends Component {
 
     state = {
         open: true,
@@ -98,6 +98,8 @@ class Grade extends Component {
 
         let { grade } = this.props;
 
+        if(grade)
+
         return (
 
             <div>
@@ -128,8 +130,8 @@ class Grade extends Component {
 
 
         );
+
+        else return (<p>Content error</p>)
     }
 }
-
-export default Grade;
 

@@ -5,7 +5,7 @@ export default class Loading extends Component {
 
     render() {
         return (
-            <div style={{ padding: 80, textAlign: 'center', justifyContent: 'center', alignItems: 'center', flex: 1, height: '100%' }}>
+            <div style={{ padding: 80, textAlign: 'center', justifyContent: 'center', alignItems: 'center', margin: 0}}>
                 <Spin size="large" tip={this.props.text} />
             </div>
         );

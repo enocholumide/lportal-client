@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native-web';
 import { colors } from '../../shared/appStyles';
-import HeaderNavigator from '../../shared/Header/Header';
 import { Jumbotron, Button } from 'reactstrap'
 
 class Jobs extends Component {
@@ -9,7 +8,6 @@ class Jobs extends Component {
     render() {
         return (
             <div>
-                <HeaderNavigator activeIndex={7} />
                 <View style={{ flex: 1, height: "100% !important", justifyContent: 'center', alignItems: "center", backgroundColor: colors.mute }}>
                     <Jumbotron>
                         <h1 className="display-3">Jobs</h1>

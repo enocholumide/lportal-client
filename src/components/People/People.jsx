@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Header from '../../shared/Header/Header'
 import Loader from '../../shared/Loader'
 import { Row, Col } from 'reactstrap'
 import { View } from 'react-native-web'
@@ -31,7 +30,6 @@ class People extends Component {
     render() {
         return (
             <div>
-                <Header activeIndex={2} />
                 {
                     this.state.peopleListIsReady ?
 

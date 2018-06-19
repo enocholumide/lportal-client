@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import HeaderNavigator from '../../shared/Header/Header'
+
 import CourseFiles from './CourseFiles'
 import CourseActivities from './CourseActivities'
 import CourseStudents from './CourseStudents'
@@ -59,7 +59,6 @@ export default class Course extends React.Component {
 
         return (
             <div>
-                <HeaderNavigator activeIndex={6} />
 
                 <MediaQuery maxDeviceWidth={768}>
 

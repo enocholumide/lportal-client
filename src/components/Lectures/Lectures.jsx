@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import HeaderNavigator from '../../shared/Header/Header'
 import { Button, Dropdown, List, Message, Container } from 'semantic-ui-react'
 import { View, ScrollView } from 'react-native-web'
 import { Row, Col } from 'reactstrap'
@@ -276,8 +275,6 @@ class Lecture extends Component {
 
         return (
             <div>
-                <HeaderNavigator activeIndex={3} />
-
                 <MediaQuery maxDeviceWidth={768}>
 
                     <Container style={{ marginTop: 50, width: "100%" }}>
