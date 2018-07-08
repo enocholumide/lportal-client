@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
-import { Button, Dropdown, List, Message, Container } from 'semantic-ui-react'
+import { Button, Dropdown, List, Message, Form } from 'semantic-ui-react'
 import { View, ScrollView } from 'react-native-web'
-import { Row, Col } from 'reactstrap'
-import { colors } from '../../shared/appStyles'
-import { apis } from '../../shared/config.js'
-import axios from 'axios'
 import LectureCard from './LectureCard'
-import MediaQuery from 'react-responsive'
+import Loading from "../../shared/Loader"
+import { Alert } from 'antd'
 
 class Lecture extends Component {
 
@@ -15,6 +12,8 @@ class Lecture extends Component {
 
         this.state = {
 
+            isLoading: true,
+            loadingMessage: "Getting content from server...",
             alllectures: [],
             alldepartments: [],
             departmentDropdown: [],
@@ -25,10 +24,81 @@ class Lecture extends Component {
         }
     }
 
-    async componentWillMount() {
+    async componentDidMount() {
         await this.loadLecturesFromServer();
     }
 
+    loadLecturesFromServer = () => {
+        this.setState({ isLoading: false })
+    }
+
+    render() {
+
+        let { isLoading, loadingMessage } = this.state;
+
+        return (
+            <div>
+                {this.renderMenu()}
+
+                {
+                    isLoading ? <Loading text={loadingMessage} /> : this.renderLectures()
+                }
+            </div>
+        )
+    }
+
+    renderMenu = () => {
+        return (
+            <div>
+                <Form style={{ marginBottom: 10 }}>
+                    <Form.Group widths='equal'>
+                        <Dropdown style={{ marginRight: 10 }}
+                            placeholder='Select school'
+                            fluid search selection
+                            options={[]}
+                        />
+                        <Dropdown style={{ marginLeft: 10 }}
+                            placeholder='Select department'
+                            fluid search selection
+                            options={[]}
+                        />
+                    </Form.Group>
+                </Form>
+                <Form>
+                    <Form.Group widths='equal'>
+                        <Dropdown style={{ marginRight: 10 }}
+                            placeholder='Select level'
+                            fluid search selection
+                            options={[]}
+                        />
+                        <Dropdown style={{ marginLeft: 10 }}
+                            placeholder='Select Semester'
+                            fluid search selection
+                            options={[]}
+                        />
+                    </Form.Group>
+                </Form>
+            </div>
+        )
+    }
+
+    renderLectures() {
+
+        return (
+            <Alert
+                message="No lectures"
+                description="No lectures found for the current selection, please check again later"
+                type="info"
+                showIcon
+                style={{ marginBottom: '24px', marginTop: '24px' }}
+            />
+        )
+    }
+
+
+
+    /** 
+  
     loadLecturesFromServer = () => {
 
         axios.all(
@@ -64,6 +134,7 @@ class Lecture extends Component {
 
 
     }
+    */
 
     /**
      * Apply lectures search filter
@@ -269,39 +340,6 @@ class Lecture extends Component {
                 />
             </View>
         )
-    }
-
-    render() {
-
-        return (
-            <div>
-                <MediaQuery maxDeviceWidth={768}>
-
-                    <Container style={{ marginTop: 50, width: "100%" }}>
-                        {this.renderMainContent()}
-                    </Container>
-
-                </MediaQuery>
-
-                <MediaQuery minDeviceWidth={769}>
-
-                    <Row>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
-                            {this.renderMainContent()}
-                        </Col>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                    </Row>
-                </MediaQuery>
-
-            </div>
-        );
     }
 
     renderMainContent() {

@@ -1,10 +1,17 @@
-import React, { Component } from 'react';
-import { Card, Image, List, Feed, Form, Button } from 'semantic-ui-react';
-import moment from 'moment';
-import { View, TouchableOpacity } from 'react-native-web';
+import React, { Component } from 'react'
+import moment from 'moment'
+import { List, Avatar, Icon } from 'antd'
 import axios from 'axios'
 import { apis } from '../../shared/config'
 import Loading from '../../shared/Loader'
+
+
+const IconText = ({ type, text }) => (
+    <span>
+        <Icon type={type} style={{ marginRight: 4, marginLeft: 4 }} />
+        {text}
+    </span>
+);
 
 class Feeds extends Component {
 
@@ -38,90 +45,26 @@ class Feeds extends Component {
         else
 
             return (
-                <Card style={{ flex: 1, width: '100%' }}>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
-                        <List>
-                            <List.Item>
-                                <Image avatar src={feed.applicationUser.photoUrl} />
-                                <List.Content>
-                                    <List.Header as='a'>{feed.applicationUser.firstName + " " + feed.applicationUser.lastName}</List.Header>
-                                    <List.Description>{feed.applicationUser.department.name}</List.Description>
-                                </List.Content>
-                            </List.Item>
-                        </List>
-                        <Card.Meta>
-                            {moment(feed.created).fromNow()}
-                        </Card.Meta>
-                    </View>
-
-                    <Card.Content>
-
-                        <Card.Header>
-                            {feed.title}
-                        </Card.Header>
-
-                        <Card.Description>
+                <div style={{ backgroundColor: "white", marginTop: 15 }}>
+                    <List.Item
+                        actions={[
+                            <IconText type="star-o" text={feed.comments.length} />,
+                            <IconText type="like-o" text={feed.likes.length} />,
+                            <IconText type="message" text={feed.comments.length} />
+                        ]}>
+                        <div style={{ padding: 15 }}>
+                            <span>
+                                <Avatar src={feed.applicationUser.photoUrl} size="small" style={{ marginRight: 8 }} />
+                                {feed.applicationUser.firstName + " " + feed.applicationUser.lastName}
+                            </span>
+                            <p style={{ color: 'darkgray', fontSize: 12 }}>{feed.department.name +  " " + moment(feed.created).fromNow()}</p>
+                            <h3>{feed.title}</h3>
                             {feed.body}
-                        </Card.Description>
+                        </div>
+                        <img width="100%" height={null} alt="" src={feed.photoUrl} style={{ borderRadius: 0 }} />
+                    </List.Item>
+                </div>
 
-                    </Card.Content>
-
-                    <Card.Content style={{ padding: 0, margin: 0 }}>
-
-                        <Image
-                            style={{ width: null, flex: 1 }}
-                            src={feed.photoUrl} />
-
-                    </Card.Content>
-
-                    <Card.Content>
-                        <Card.Meta>
-                            {feed.likes.length} {<i className="like icon"></i>}
-                            {feed.comments.length} {<i className="comments icon"></i>}
-                            0 {<i className="share icon"></i>}
-                        </Card.Meta>
-                    </Card.Content>
-
-                    <Card.Content >
-
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between' }}>
-
-                            <span className="floated">
-                                <i className="like icon"></i>Like
-                    </span>
-                            <TouchableOpacity onPress={() => this.setState({ showComment: !this.state.showComment })}>
-                                <span className="floated">
-                                    <i className="comments icon"></i>Comment
-                    </span>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => alert("pressed me")}>
-                                <span className="floated">
-                                    <i className="share icon"></i>Share
-                    </span>
-                            </TouchableOpacity>
-                        </View>
-
-                        {
-                            this.state.showComment ?
-
-                                <div>
-                                    <Feed events={this.state.events} />
-
-                                    <Form reply>
-                                        <Form.TextArea
-                                            onChange={this.handleFormChange.bind(this)} />
-                                        <Button content='Add Reply' labelPosition='left' icon='edit' primary onClick={() => this.addReplyToPost(feed)} />
-                                    </Form>
-                                </div>
-
-                                :
-
-                                null
-                        }
-                    </Card.Content>
-
-
-                </Card>
             );
     }
 

@@ -16,27 +16,31 @@ export class DataProvider extends React.Component {
         this.setCredentials = this.setCredentials.bind(this)
         this.setUser = this.setUser.bind(this)
         this.signUpUser = this.signUpUser.bind(this)
+        this.updateStateParameter = this.updateStateParameter.bind(this)
+        this.setOrganisation = this.setOrganisation.bind(this)
 
         this.state = {
             user: prestate.user,
-            credentials: prestate.credentials
+            credentials: prestate.credentials,
+            organisationID: -1
         }
     }
 
-    componentWillMount() {
-        let { user, credentials } = localStorage
+    async componentDidMount() {
+        let { user, credentials, organisationID } = localStorage
 
-        if (user !== undefined && credentials !== undefined) {
+        if (user && credentials) {
             this.state.user = JSON.parse(user);
             this.state.credentials = JSON.parse(credentials)
-        }
+            this.state.organisationID = parseInt(organisationID, 10)
+        } 
+        else
+        console.log("Empty local storage");
 
     }
 
     logOut() {
-        console.log("Logging out")
-        this.setState({user: undefined, credentials: undefined})
-        console.log(this.state)
+        this.setState({ user: undefined, credentials: undefined, organisationID: -1 })
         localStorage.clear()
         this.checkAuthorization()
     }
@@ -52,9 +56,28 @@ export class DataProvider extends React.Component {
         localStorage.setItem("credentials", JSON.stringify(credentials))
     }
 
+    setOrganisation(organisationID) {
+        this.setState({ organisationID: organisationID })
+        localStorage.setItem("organisationID", organisationID)
+    }
+
     setUser(user) {
         this.setState({ user: user })
         localStorage.setItem("user", JSON.stringify(user))
+    }
+
+    /**
+     * 
+     * @param {*} name 
+     * @param {*} data 
+     */
+    updateStateParameter(name, data){
+
+            let state = this.state;
+            state[name] = data;
+            this.setState(state)
+            localStorage.setItem(name, JSON.stringify(data))
+
     }
 
 
@@ -106,8 +129,10 @@ export class DataProvider extends React.Component {
                 checkAuthorization: this.checkAuthorization,
                 gotoOrganisation: this.gotoOrganisation,
                 setCredentials: this.setCredentials,
+                setOrganisation: this.setOrganisation,
                 setUser: this.setUser,
                 signUpUser: this.signUpUser,
+                updateStateParameter: this.updateStateParameter
 
             }}>
                 {this.props.children}

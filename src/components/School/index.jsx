@@ -1,19 +1,23 @@
 import React from 'react'
 import { Row, Col, Tabs, Icon } from 'antd'
-import Dashboard from '../Dashboard/Dashboard';
-import News from '../News/News';
-import People from '../People/People';
-import Lecture from '../Lectures/Lectures';
-import Grade from '../Grades/Grades';
-import Exams from '../Exams/Exams';
-import Jobs from '../Jobs/Jobs';
-import Info from '../Info/Info';
-import CoursesOverview from '../Courses/CoursesOverview';
-import { colors } from '../../shared/config'
+import Dashboard from '../Dashboard/Dashboard'
+import News from '../News/News'
+import People from '../People/People'
+import Lecture from '../Lectures/Lectures'
+import Grade from '../Grades/Grades'
+import Exams from '../Exams/Exams'
+import Jobs from '../Jobs/Jobs'
+import Info from '../Info/Info'
+import Course from '../Courses/index'
+import Chat from '../Dashboard/Contents/Chat'
+import Summary from '../Dashboard/Contents/Summary'
+import { Layout } from 'antd'
+
+const { Sider, Content } = Layout;
 const TabPane = Tabs.TabPane;
 
 
-export default class Index extends React.Component {
+export default class School extends React.Component {
 
     constructor(props) {
         super(props)
@@ -25,17 +29,28 @@ export default class Index extends React.Component {
     }
 
     render() {
+
+        let siderWidth = this.state.content === "News" ? 250 : 220
+
         return (
 
             <div>
-                <div style={{ backgroundColor: colors.mute }}>
+
+                <div style={{  }}>
                     <Row >
-                        <Col xs={{ span: 24, offset: 0 }} lg={{ span: 16, offset: 4 }} md={{ span: 16, offset: 4 }}>
+                        <Col md={{ span: 24, offset: 0 }} lg={{ span: 16, offset: 4 }} >
                             {this.renderTabs()}
+                        </Col>
+
+                        <Col md={{ span: 24, offset: 0 }} lg={{ span: 16, offset: 4 }} >
+                            <Layout>
+                                <Sider style={{ padding: 10, backgroundColor: 'white' }} width={siderWidth}><Summary {...this.props}/></Sider>
+                                <Content style={{ padding: 15, backgroundColor: 'white' }}>{this.getContent()}</Content>
+                                <Sider style={{ padding: 10, backgroundColor: 'white' }} width={siderWidth}><Chat organisationID={this.props.organisationID}/></Sider>
+                            </Layout>
                         </Col>
                     </Row >
                 </div>
-                <div>{this.getContent()}</div>
             </div>
 
         )
@@ -47,28 +62,21 @@ export default class Index extends React.Component {
 
         switch (content) {
             case "Dashboard":
-                return (<Dashboard />)
-                break;
+                return (<Dashboard organisationID={this.props.organisationID} {...this.props}/>)
             case "News":
-                return (<News />)
-                break;
+                return (<News organisationID={this.props.organisationID} {...this.props}/>)
             case "People":
-                return (<People />)
-                break;
+                return (<People organisationID={this.props.organisationID} {...this.props}/>)
             case "Lectures":
-                return (<Lecture />)
-                break;
+                return (<Lecture organisationID={this.props.organisationID} {...this.props}/>)
             case "Grades":
-                return (<Grade />)
-                break;
+                return (<Grade organisationID={this.props.organisationID} {...this.props}/>)
             case "Exams":
-                return (<Exams />)
-                break;
+                return (<Exams organisationID={this.props.organisationID} {...this.props}/>)
             case "Courses":
-                return (<CoursesOverview />)
-                break;
+                return (<Course organisationID={this.props.organisationID} {...this.props}/>)
             default:
-                return (<Jobs />)
+                return (<Jobs organisationID={this.props.organisationID} {...this.props}/>)
         }
     }
 
@@ -81,14 +89,11 @@ export default class Index extends React.Component {
         return (
             <div>
                 <Tabs
+                    tabPosition="top"
+                    style={{ padding: 10, paddingLeft: 0 }}
                     defaultActiveKey={this.state.content}
                     tabBarGutter={16}
-                    tabPosition="top"
-                    type="card"
-                    justified
-                    onChange={this.updatePath}
-                    tabBarStyle={{ paddingBottom: 0, marginBottom: 0, display: 'flex', justifyContent: 'space-between', textAlign: 'center', paddingTop: 30, flexGrow: 1, width: '100%', marginRight: '0px' }}
-                    style={{ flex: 1, justifyContent: 'space-between', flexDirection: 'row' }} >
+                    onChange={this.updatePath}>
                     {
                         panes.map((pane, index) =>
                             <TabPane tab={<span><Icon type={pane.icon} />{pane.title}</span>} key={pane.title}></TabPane>
@@ -101,13 +106,13 @@ export default class Index extends React.Component {
 }
 
 const panes = [
-    { link: "/dashboard", icon: "appstore-o", title: "Dashboard", content: <Dashboard /> },
+    //{ link: "/dashboard", icon: "appstore-o", title: "Dashboard", content: <Dashboard /> },
+    { link: "/courses", icon: "code  ", title: "Courses", content: <Course /> },
     { link: "/news", icon: "global", title: "News", content: <News /> },
     { link: "/people", icon: "team", title: "People", content: <People /> },
     { link: "/lectures", icon: "schedule", title: "Lectures", content: <Lecture /> },
     { link: "/grades", icon: "solution", title: "Grades", content: <Grade /> },
     { link: "/exams", icon: "edit", title: "Exams", content: <Exams /> },
-    { link: "/courses", icon: "code  ", title: "Courses", content: <CoursesOverview /> },
     { link: "/jobs", icon: "gift", title: "Jobs", content: <Jobs /> },
     { link: "/info", icon: "info-circle", title: "Info", content: <Info /> },
 ]

@@ -1,15 +1,13 @@
 import React, { Component } from 'react'
-import './App.css';
+import './App.css'
 import Navigator from './navigator/Navigator'
 import ApplicationFooter from './shared/Footer'
 import firebase from 'firebase/app'
 import 'firebase/storage'
 import { storageConfig } from './shared/config'
-import { Layout } from 'antd';
-import { DataProvider, AppContext } from './provider/DataProvider'
-import { Record } from 'immutable';
-import { Redirect } from 'react-router-dom';
-const { Footer, Content } = Layout;
+import { Layout } from 'antd'
+import { DataProvider } from './provider/DataProvider'
+const { Footer, Content } = Layout
 
 class App extends Component {
 

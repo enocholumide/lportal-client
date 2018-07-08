@@ -31,9 +31,7 @@ export default class Login extends React.Component {
                             </div>
                         </Col>
                     </Row >
-
                 )}
-
             </AppContext.Consumer>
         )
     }

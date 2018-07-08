@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 import { Image } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
 import { colors } from '../config'
-import { Button } from 'antd'
-import { View } from 'react-native-web'
 import {
     Collapse,
     Navbar,
@@ -22,7 +20,6 @@ import { Row, Col } from 'antd'
 import { AppContext } from '../../provider/DataProvider'
 import { Redirect } from 'react-router-dom';
 
-let appcontext = undefined
 class Header extends Component {
 
     constructor(props) {
@@ -58,32 +55,29 @@ class Header extends Component {
                         }
 
                         <div style={{ backgroundColor: colors.header, borderBottomColor: '#757575', borderBottomWidth: 1 }}>
-                            <Row style={{ backgroundColor: 'black' }}>
-                                <Col span={16} offset={4}>
-                                        <Navbar dark expand="md" style={{ paddingLeft: 0, paddingRight: 0, height: '7vh'  }}>
-                                            <NavbarBrand href="/">
-                                                <Image
-                                                    src='https://i.pinimg.com/originals/9c/11/2a/9c112aee0359cb51ae0d580e7daafadd.png'
-                                                    style={{ width: 40, height: 40, borderRadius: 20, marginRight: 10 }}
-                                                />
-                                            </NavbarBrand>
-                                            <NavbarToggler onClick={this.toggle} />
-                                            <Collapse isOpen={this.state.isOpen} navbar>
+                            <Row style={{ backgroundColor: colors.header, boxShadow: '2px 2px 1px #888888' }}>
+                                <Col md={{ span: 24, offset: 0 }} lg={{ span: 16, offset: 4 }} >
+                                    <Navbar dark expand="md" style={{ paddingLeft: 0, paddingRight: 0, height: '50px' }}>
+                                        <NavbarBrand href="/" style={{marginRight: 0}}>
+                                            <Image
+                                                src='http://www.clker.com/cliparts/4/e/d/a/1392556742528197424letter-l-icon.png'
+                                                style={{ width: 40, height: 40, borderRadius: 20}}
+                                            />
+                                        </NavbarBrand>
+                                        <NavbarToggler onClick={this.toggle} />
+                                        <Collapse isOpen={this.state.isOpen} navbar>
 
-                                                <Nav className="mr-auto" navbar>
-                                                    <NavItem>
-                                                        <NavLink href="/">Our School</NavLink>
-                                                    </NavItem>
-                                                    <NavItem>
-                                                        <NavLink href="/">Admissions</NavLink>
-                                                    </NavItem>
-                                                    <NavItem>
-                                                        <NavLink href="/">Issues</NavLink>
-                                                    </NavItem>
-                                                </Nav>
-                                                {context.state.user ? this.showUserTab(context) : this.showNonLoggedInTab(context)}
-                                            </Collapse>
-                                        </Navbar>
+                                            <Nav className="mr-auto" navbar>
+                                                <NavItem>
+                                                    <NavLink href="/" style={{color: 'white', fontWeight: 'bold'}}>Lportal</NavLink>
+                                                </NavItem>
+                                                <NavItem>
+                                                    <NavLink href="/">Issues</NavLink>
+                                                </NavItem>
+                                            </Nav>
+                                            {context.state.user ? this.showUserTab(context) : this.showNonLoggedInTab(context)}
+                                        </Collapse>
+                                    </Navbar>
                                 </Col>
                             </Row>
 
@@ -102,14 +96,15 @@ class Header extends Component {
 
             <Nav className="ml-auto" navbar>
                 <NavItem>
-                    <NavLink href="/login" style={{ fontWeight: 'bold', color: 'white' }}>Sign in</NavLink>
+                    <NavLink href="/login" style={{ fontWeight: 'bold' }}>Sign in</NavLink>
                 </NavItem>
                 <NavItem>
                     <NavLink>Or</NavLink>
                 </NavItem>
                 <NavItem>
-                    <NavLink href="/signup" style={{ fontWeight: 'bold', color: 'white' }}>Sign up</NavLink>
+                    <NavLink href="/signup" style={{ fontWeight: 'bold' }}>Sign up</NavLink>
                 </NavItem>
+
             </Nav>
 
         )

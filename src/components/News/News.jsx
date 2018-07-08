@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
-import { Dropdown, Container } from 'semantic-ui-react'
-import axios from 'axios'
-import { Row, Col } from 'reactstrap'
-import { colors } from '../../shared/appStyles'
+import { Dropdown } from 'semantic-ui-react'
+import { Alert, List } from 'antd'
 import Loading from "../../shared/Loader"
 import Feed from './Feed'
-import { apis } from '../../shared/config'
-import MediaQuery from 'react-responsive'
+import req from '../../shared/axios/requests'
+
 
 class News extends Component {
 
@@ -14,7 +12,7 @@ class News extends Component {
         super(props);
 
         this.state = {
-            dataIsReady: false,
+            isLoading: true,
             news: [],
             news_reserved: [],
             schools: [],
@@ -26,63 +24,17 @@ class News extends Component {
 
         await this.loadDataFromServer();
 
-        window.addEventListener("resize", this.setState(this.state));
-
     }
 
     render() {
 
-        return (
+        let { isLoading } = this.state;
 
-            <div>
+        if (isLoading)
+            return (<Loading text={this.state.loadingMessage} />)
 
-                {
-                    this.state.dataIsReady ?
-
-                        this.renderComponent()
-
-                        :
-
-                        <Loading text={this.state.loadingMessage} />
-                }
-
-            </div>
-        );
-    }
-
-    renderComponent = () => {
-
-        return (
-
-            <div className="main">
-
-                <MediaQuery maxDeviceWidth={768}>
-
-                    <Container style={{ marginTop: 50, width: "100%" }}>
-                        {this.renderMainContent()}
-                    </Container>
-
-                </MediaQuery>
-
-                <MediaQuery minDeviceWidth={769}>
-
-                    <Row>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
-                            {this.renderMainContent()}
-                        </Col>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                    </Row>
-                </MediaQuery>
-
-            </div>
-        );
+        else
+            return (<div> {this.renderMainContent()} </div>);
     }
 
     renderMainContent = () => {
@@ -95,17 +47,7 @@ class News extends Component {
                 //onChange={(event, data) => this.filterNews(data.value)}
                 />
 
-                {
-                    this.state.feedIsReady ?
-
-
-                        this.renderFeeds()
-
-                        :
-
-                        <Loading text={"Refreshing feeds"} />
-
-                }
+                {this.renderFeeds()}
             </div>
         )
     }
@@ -115,27 +57,70 @@ class News extends Component {
      */
     loadDataFromServer = () => {
 
-        let schoolsRequest = apis.schools;
-        let newsRequest = apis.news
+        let orgID = this.props.organisationID;
 
-        axios.all(
+        let schoolsRequest = "/organisations/" + orgID + "/schools";
+        let newsRequest = "/organisations/" + orgID + "/news";
+
+        req.get(schoolsRequest)
+            .then((response) => {
+                if (response.status === 200) {
+                    this.setState(
+                        {
+                            schools: this.formatSchoolsAPIData(response.data),
+                        });
+                }
+                else
+                    console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+                this.setState({ isLoading: true, loadingMessage: error.toString() })
+            })
+
+        req.get(newsRequest)
+            .then((response) => {
+                if (response.status === 200) {
+                    this.setState(
+                        {
+                            news: response.data,
+                            news_reserved: response.data,
+                            isLoading: false,
+                        });
+                }
+                else
+                    console.log(response)
+            })
+            .catch((error) => {
+                console.log(error)
+                this.setState({ isLoading: true, loadingMessage: error.toString() })
+            })
+
+        /** 
+
+        req.all(
             [
-                axios.get(schoolsRequest),
-                axios.get(newsRequest)
+                req.get(schoolsRequest),
+                req.get(newsRequest)
             ])
-            .then(axios.spread((schoolsResponse, newsResponse) => {
+            .then(req.spread((schoolsResponse, newsResponse) => {
 
                 this.setState(
                     {
                         schools: this.formatSchoolsAPIData(schoolsResponse.data),
                         news: newsResponse.data,
                         news_reserved: newsResponse.data,
-                        dataIsReady: true,
+                        isLoading: true,
                         feedIsReady: true
                     });
 
             }))
-            .catch(error => console.log(error))
+            .catch(error => {
+                this.setState({isLoading: false, loadingMessage: error.toString()})
+                console.log(error)
+            })
+
+            */
     }
 
     /**
@@ -186,19 +171,47 @@ class News extends Component {
     renderFeeds = () => {
 
         if (this.state.news.length > 0) {
+            
+            this.state.news.push(this.state.news[0]);
 
             return (
-                this.state.news.map((feed, index) =>
 
-                    <Feed feed={feed} key={index} />
+                <div >
 
-                )
+                    <List
+                        itemLayout="vertical"
+                        size="large"
+                        dataSource={this.state.news}
+                        renderItem={(feed, index) => (
+
+                            <Feed feed={feed} key={index} />
+
+
+                        )}
+                    />
+
+                    {
+                        /**
+                         this.state.news.map((feed, index) =>
+    
+                        <Feed feed={feed} key={index} />
+    
+                     )
+                         */
+                    }
+
+                </div>
+
             )
         } else {
             return (
-                <Container style={{ flex: 1 }}>
-                    <h2>No feeds found</h2>
-                </Container>
+                <Alert
+                    message="No feed found"
+                    description="No feed found at this time, please check again later "
+                    type="info"
+                    showIcon
+                    style={{ marginBottom: '24px', marginTop: '24px' }}
+                />
 
             )
         }

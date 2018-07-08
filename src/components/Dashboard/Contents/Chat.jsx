@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { List, Avatar } from 'antd'
 import Loading from '../../../shared/Loader'
-import { colors, apis } from '../../../shared/config'
-import axios from 'axios'
+import { colors } from '../../../shared/config'
+import req from '../../../shared/axios/requests'
 
 export default class Info extends Component {
 
@@ -18,7 +18,7 @@ export default class Info extends Component {
     }
 
     loadUsers() {
-        axios.get(apis.users)
+        req.get("/organisations/" + this.props.orgnaisationID + "/users")
             .then((response) => {
                 if (response.status === 200) {
                     this.setState({ loading: false, data: response.data })
@@ -42,12 +42,11 @@ export default class Info extends Component {
         else
 
             return (
-                <div style={{ padding: 15, backgroundColor: colors.header }}>
+                <div style={{ padding: 15, backgroundColor: 'white' }}>
                     <p style={{ color: colors.accent, fontWeight: 'bold' }}>Your colleagues</p>
                     <List
                         itemLayout="horizontal"
                         dataSource={data}
-                        style={{backgroundColor: colors.header}}
                         renderItem={(item, index) => (
                             <List.Item actions={[<div style={{ height: 8, width: 8, borderRadius: 4, backgroundColor: index === data.length - 1 ? 'red' : colors.accent }}></div>]}>
                                 <List.Item.Meta

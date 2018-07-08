@@ -1,9 +1,4 @@
 import React, { Component } from 'react'
-import { Row, Col } from 'reactstrap'
-import { Container } from 'semantic-ui-react'
-
-import { colors } from '../../shared/config.js'
-import MediaQuery from 'react-responsive'
 import { Divider } from 'antd'
 import StudentsGradeArea from './Students/StudentGradesArea'
 import TeacherGradingArea from './Teachers/TeacherGradingArea'
@@ -25,30 +20,7 @@ class Grade extends Component {
 
             <div className="main">
 
-                <MediaQuery maxDeviceWidth={768}>
-
-                    <Container style={{ marginTop: 50, width: "100%" }}>
-                        {this.renderMainContent()}
-                    </Container>
-
-                </MediaQuery>
-
-                <MediaQuery minDeviceWidth={769}>
-
-                    <Row>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
-                            {this.renderMainContent()}
-                        </Col>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                    </Row>
-                </MediaQuery>
+                {this.renderMainContent()}
 
             </div>
         );

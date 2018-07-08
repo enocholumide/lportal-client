@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Message } from 'semantic-ui-react'
 import { colors, apis } from '../../../shared/config.js'
 import axios from 'axios'
 import GradeCard from './GradeCard'
@@ -18,14 +17,14 @@ export default class StudentGradesArea extends Component {
             grades: [],
             student: true,
             teacher: true,
-            loading: true
+            loading: false
         }
     }
 
 
     componentDidMount() {
 
-        this.loadGradesFromServer();
+        //this.loadGradesFromServer();
 
     }
 
@@ -56,26 +55,31 @@ export default class StudentGradesArea extends Component {
 
         if (loading)
 
-            return (<Loader text={loadingMessage.toString()}/>)
+            return (<Loader text={loadingMessage.toString()} />)
 
         else
 
             return (
 
-                <div style={{ backgroundColor: 'white', padding: 10 }}>
+                <div >
 
-                    <Message info >
-                        <Message.Header>About your grades: </Message.Header>
-                        <p>Please note:</p>
-                        <Message.List items={[
-                            "You can download and export your current grade as a transcript",
-                            "If you apply for a student job, your current grade will be shared with the lecturer",
-                            "Your grades are only visible to you , unless you share them",
-                            "You may expand each grade and view the course statistics",
-                            "If you feel there is a problem with your grade, please report an issue immediately!"
-                        ]} />
-
-                    </Message>
+                    <Alert
+                        message="About your grades: "
+                        description={
+                            <div>
+                                <ul>
+                                    <li>Please note:</li>
+                                    <li>You can download and export your current grade as a transcript</li>
+                                    <li>If you apply for a student job, your current grade will be shared with the lecturer</li>
+                                    <li>Your grades are only visible to you , unless you share them</li>
+                                    <li>You may expand each grade and view the course statistics</li>
+                                    <li>If you feel there is a problem with your grade, please report an issue immediately!</li>
+                                </ul>
+                            </div>}
+                        type="info"
+                        showIcon
+                        style={{ marginBottom: '15px' }}
+                    />
 
                     {this.renderGrades()}
 
@@ -88,7 +92,7 @@ export default class StudentGradesArea extends Component {
 
         let { grades } = this.state;
 
-        if (grades.length < 1) return (<Alert message="No grade found at this time, check again" type="info" showIcon />)
+        if (grades.length < 1) return (<Alert message="No grade found at this time, check again" type="warning" showIcon />)
         else
             return (
                 <div>

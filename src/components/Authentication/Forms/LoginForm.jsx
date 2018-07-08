@@ -12,62 +12,104 @@ export default class LoginForm extends Component {
         this.handleFormChange = this.handleFormChange.bind(this)
         this.onSignIn = this.onSignIn.bind(this)
 
-        console.log(localStorage.getItem("user"))
-
         this.state = {
             email: 'admin@lportal.com',
             password: 'secret',
             loading: false,
             loginerror: false,
-            redirect: false
+            redirect: false,
+            errorMessage: ''
         }
     }
 
     render() {
 
-        let { email, password, username, loading, loginerror, redirect } = this.state
-
-        let SIZE = 'medium'
+        let { redirect } = this.state
 
         if (redirect) return <Redirect to={this.props.redirect} />
 
         else
             return (
 
-                <div className='d-flex flex-justify-content-center' style={{ flexDirection: 'column', margin: 'auto', justifyContent: 'center', width: 360, padding: '10px' }} >
-
-
-                    <div style={{ borderWidth: 5, borderColor: 'red', backgroundColor: 'white', padding: '24px', borderRadius: 8 }}>
-
-                        <Form>
-                            {loginerror ?
-
-                                <Alert message="Invalid email or password" type="error" showIcon style={{ marginBottom: '24px' }} /> :
-
-                                null}
-
-                            <Form.Input size={SIZE} fluid label='Email address' placeholder='you@email.com' type='email' name='email' defaultValue={email} onChange={this.handleFormChange} />
-
-                            <Form.Input size={SIZE} fluid label='Password' placeholder='Type Secret' name='password'defaultValue={password}  type='password' onChange={this.handleFormChange} />
-                            <p><a href="/login">Forgot password?</a></p>
-                            {loading ? <Spin /> : null}
-                            <Form.Button fluid positive size={SIZE} onClick={this.onSignIn}>Sign in</Form.Button>
-                            <p style={{ textAlign: 'center' }}>
-                                By clicking “Sign in, you agree to our terms of service and privacy statement. We’ll occasionally send you account related emails.
-                            </p>
-
-                        </Form>
-
-                    </div>
-
-                    <div style={{ textAlign: 'center', marginTop: '24px', padding: '14px', borderRadius: 3, borderColor: 'gray', borderWidth: 2, backgroundColor: 'white' }}>
-
-                        <p style={{}}> New to Lportal?  <a href="/login"> Create an account</a>.</p>
-
-                    </div>
+                <div>
+                    {
+                        this.props.flat ? this.renderFlatForm() : this.renderNormalForm()
+                    }
                 </div>
 
+
+
             )
+    }
+
+    renderFlatForm() {
+
+        let { email, password, loginerror, errorMessage } = this.state
+
+        let SIZE = 'medium'
+
+        return (
+            <Form>
+                {loginerror ?
+                    <Alert message={errorMessage} type="error" showIcon style={{ marginBottom: '24px' }} /> :
+                    null
+                }
+                <Form.Group widths='equal'>
+                    <Form.Input size={SIZE} fluid label='Email address' placeholder='you@email.com' type='email' name='email' defaultValue={email} onChange={this.handleFormChange} />
+                    <Form.Input size={SIZE} fluid label='Password' placeholder='Type Secret' name='password' defaultValue={password} type='password' onChange={this.handleFormChange} />
+                </Form.Group>
+
+                <Form.Group inline>
+                    <Form.Button positive size={SIZE} onClick={this.onSignIn}>Sign in</Form.Button>
+                    <p>By clicking “Sign in, you agree to our terms of service and privacy statement.</p>
+                </Form.Group>
+            </Form>
+        )
+
+    }
+
+    renderNormalForm() {
+
+        let { email, loading, password, loginerror, errorMessage } = this.state
+
+        let SIZE = 'medium'
+
+
+        return (
+            <div className='d-flex flex-justify-content-center' style={{ flexDirection: 'column', margin: 'auto', justifyContent: 'center', width: 360, padding: '10px' }} >
+
+
+                <div style={{ borderWidth: 5, borderColor: 'red', backgroundColor: 'white', padding: '24px', borderRadius: 8 }}>
+
+                    <Form>
+                        {loginerror ?
+
+                            <Alert message={errorMessage} type="error" showIcon style={{ marginBottom: '24px' }} /> :
+
+                            null}
+
+                        <Form.Input size={SIZE} fluid label='Email address' placeholder='you@email.com' type='email' name='email' defaultValue={email} onChange={this.handleFormChange} />
+
+                        <Form.Input size={SIZE} fluid label='Password' placeholder='Type Secret' name='password' defaultValue={password} type='password' onChange={this.handleFormChange} />
+                        <p><a href="/login">Forgot password?</a></p>
+                        {loading ? <Spin /> : null}
+                        <Form.Button fluid positive size={SIZE} onClick={this.onSignIn}>Sign in</Form.Button>
+                        <p style={{ textAlign: 'center' }}>
+                            By clicking “Sign in, you agree to our terms of service and privacy statement.
+                    </p>
+
+                    </Form>
+
+                </div>
+
+                <div style={{ textAlign: 'center', marginTop: '24px', padding: '14px', borderRadius: 3, borderColor: 'gray', borderWidth: 2, backgroundColor: 'white' }}>
+
+                    <p style={{}}> New to Lportal?  <a href="/login"> Create an account</a>.</p>
+
+                </div>
+            </div>
+        )
+
     }
 
     handleFormChange(event) {
@@ -109,23 +151,20 @@ export default class LoginForm extends Component {
                     }
                 })
                 .catch((error) => {
-                    console.log(error.response.data)
-                    this.setState({ loginerror: true, loading: false })
+                    console.log(error)
+                    let errorMessage = error.toString()
+                    error.response && error.response.data && error.response.data.message && (errorMessage = error.response.data.message);
+                    this.setState({ loginerror: true, loading: false, errorMessage: errorMessage })
 
                 })
 
+        } else {
+            this.setState({ loginerror: true, loading: false, error: 'Invalid email or password' })
         }
 
     }
 
     validateEntries() {
-        let { email, password } = this.state
-
-        let re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        console.log(re.test(email))
-        if (!re.test(email)) {
-            return false
-        }
 
         return true
     }

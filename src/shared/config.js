@@ -1,7 +1,7 @@
-//const DEV = "http://localhost:8080/api/"
-const PROD = "https://lportal.herokuapp.com/api/"
+const DEV = "http://localhost:8080/api/"
+//const PROD = "https://lportal.herokuapp.com/api/"
 
-export const prefix = PROD
+export const prefix = DEV
 
 export const apis = {
     prefix: prefix,
@@ -27,7 +27,8 @@ export const colors = {
     mute: '#F5F5F5',
     active: '#0abde3',
     side: "#FAFAFA",
-    header: "#FAFAFA"
+    header: "#424242",
+    footer: "#424242"
 }
 
 export const storageConfig = {

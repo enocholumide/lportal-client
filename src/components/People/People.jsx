@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import Loader from '../../shared/Loader'
-import { Row, Col } from 'reactstrap'
 import { View } from 'react-native-web'
-import { colors, apis } from '../../shared/config'
-import { Dropdown, List, Checkbox, Container } from 'semantic-ui-react'
-import axios from "axios"
+import { Dropdown, List, Checkbox } from 'semantic-ui-react'
 import Person from './Person'
-import MediaQuery from 'react-responsive'
+import req from '../../shared/axios/requests'
 
 class People extends Component {
 
@@ -19,7 +16,7 @@ class People extends Component {
             peopleList: [],
             searchQuery: "",
             showStaffs: true,
-            showStudents: false
+            showStudents: true
         }
     }
 
@@ -33,7 +30,7 @@ class People extends Component {
                 {
                     this.state.peopleListIsReady ?
 
-                        this.renderComponent()
+                        this.renderMainContent()
 
                         :
 
@@ -44,40 +41,6 @@ class People extends Component {
         );
     }
 
-
-    renderComponent = () => {
-
-        return (
-            <div>
-
-                <MediaQuery maxDeviceWidth={768}>
-
-                    <Container style={{ marginTop: 50, width: "100%" }}>
-                        {this.renderMainContent()}
-                    </Container>
-
-                </MediaQuery>
-
-                <MediaQuery minDeviceWidth={769}>
-
-                    <Row>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                        <Col lg="4" xs="6" sm="6" style={{ backgroundColor: "white", padding: 10 }}>
-                            {this.renderMainContent()}
-                        </Col>
-
-                        <Col lg="4" xs="3" sm="3" style={{ backgroundColor: colors.mute }}>
-                        </Col>
-
-                    </Row>
-                </MediaQuery>
-
-            </div>
-        )
-    }
 
     /**
      * After neccessary checks and data have been retrieved from the server,
@@ -115,7 +78,7 @@ class People extends Component {
 
         return (
 
-            <List divided relaxed>
+            <List relaxed>
                 {
                     people.map((person, index) =>
                         <List.Item key={index}>
@@ -199,9 +162,10 @@ class People extends Component {
         this.setState({ peopleListIsReady: false });
 
         // TODO: Change the API to point to the app server, i.e the backend (Spring) server
-        let usersAPI = apis.users;
+        let orgID = this.props.organisationID;
+        let usersAPI = "/organisations/" + orgID + "/users";
 
-        axios.get(usersAPI)
+        req.get(usersAPI)
             .then((response) => {
                 if (response.status === 200) {      // Status OK
                     this.setState({

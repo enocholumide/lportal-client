@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Button } from 'semantic-ui-react'
+import { colors } from './config'
 
 let ignore = window.location.pathname === "/login" ? true : false
 class Footer extends Component {
@@ -7,10 +9,7 @@ class Footer extends Component {
 
         if (!ignore)
             return (
-
-
-
-                <div style={{ backgroundColor: "black", color: 'white', padding: 50, height: '20vh' }} className="main">
+                <div style={{ backgroundColor: colors.footer, color: 'white', padding: 50, height: 'auto' }} className="main">
                     <footer className="mainfooter">
 
                         <div className="footer-middle">
@@ -42,11 +41,12 @@ class Footer extends Component {
                                     <div className="col-md-3 col-sm-6">
                                         <div className="footer-pad">
                                             <h4>Social and links</h4>
-                                            <ul className="list-unstyled">
-                                                <li><a>Facebook</a></li>
-                                                <li><a>VK</a></li>
-                                                <li><a>Twitter</a></li>
-                                            </ul>
+                                            <div>
+                                                <Button circular color='facebook' icon='facebook' />
+                                                <Button circular color='twitter' icon='twitter' />
+                                                <Button circular color='linkedin' icon='linkedin' />
+                                                <Button circular color='youtube' icon='youtube' />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

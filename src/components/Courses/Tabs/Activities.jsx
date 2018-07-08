@@ -2,7 +2,7 @@ import React from 'react';
 import { List, Card, Divider, Message } from 'semantic-ui-react';
 import axios from 'axios';
 import moment from 'moment';
-import { apis } from '../../shared/config';
+import { apis } from '../../../shared/config';
 
 export default class CourseActivities extends React.Component {
 
@@ -42,7 +42,7 @@ export default class CourseActivities extends React.Component {
     }
 
     refresh() {
-        console.log("I am refreshing activites")
+        //console.log("I am refreshing activites")
         this.loadActivities()
     }
 

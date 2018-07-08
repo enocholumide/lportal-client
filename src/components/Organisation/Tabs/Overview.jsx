@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native-web'
-import { Row, Col, Card, Progress } from 'antd'
+import { Row, Col, Card, Progress, Button } from 'antd'
 import Activities from '../Shared/Activity'
 
 export default class Overview extends Component {
@@ -19,11 +19,11 @@ export default class Overview extends Component {
                         <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'space-between', marginBottom: '12px' }}>
 
                             <Text> Latest Activity </Text>
-                            <span className="floated">View all</span>
+                            <span className="floated">{this.getExtraButton("Activities")}</span>
 
                         </View>
 
-                        <Activities activities={this.props.organisation.activities}/>
+                        <Activities activities={this.props.organisation.activities} />
 
                     </Col>
                 </Row>
@@ -33,17 +33,25 @@ export default class Overview extends Component {
 
     storageDetails() {
         return (
-
             <div>
-
-                <Card title="Storage" extra={<a href="">Details</a>}  >
-                    <Progress percent={35} />
+                <Card
+                    title="Storage" extra={this.getExtraButton("Storage")} >
+                    <Progress percent={10} />
                 </Card>
-
             </div>
-
         )
 
+    }
+
+    getExtraButton = (tabName) => {
+        return (
+            <Button
+                type="primary"
+                size={'small'}
+                ghost
+                onClick={() => this.props.onTabChange(tabName)}
+            > Details </Button>
+        )
     }
 
     collaboratorActivities() {
@@ -51,9 +59,9 @@ export default class Overview extends Component {
 
             <div style={{ marginTop: '54px' }}  >
 
-                <Card title="Teachers' Activity" extra={<a href="">Details</a>} >
+                <Card title="Teachers' Activity" extra={this.getExtraButton("Activities")} >
 
-                    <Activities activities={this.props.organisation.teacherActivities}/>
+                    <Activities activities={this.props.organisation.teacherActivities} />
 
                 </Card>
 
