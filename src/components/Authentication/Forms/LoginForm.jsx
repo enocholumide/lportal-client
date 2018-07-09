@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Form } from 'semantic-ui-react'
-import { apis } from '../../../shared/config'
-import axios from 'axios'
+import req from '../../../shared/axios/requests'
 import { Spin, Alert } from 'antd'
 import { Redirect } from 'react-router-dom'
 
@@ -44,7 +43,7 @@ export default class LoginForm extends Component {
 
     renderFlatForm() {
 
-        let { email, password, loginerror, errorMessage } = this.state
+        let { email, password, loginerror, errorMessage, loading } = this.state
 
         let SIZE = 'medium'
 
@@ -59,8 +58,9 @@ export default class LoginForm extends Component {
                     <Form.Input size={SIZE} fluid label='Password' placeholder='Type Secret' name='password' defaultValue={password} type='password' onChange={this.handleFormChange} />
                 </Form.Group>
 
-                <Form.Group inline>
+                <Form.Group inline style={{alignItems: 'center'}}>
                     <Form.Button positive size={SIZE} onClick={this.onSignIn}>Sign in</Form.Button>
+                    {loading ? <Spin style={{marginRight: '12px'}}/> : null}
                     <p>By clicking “Sign in, you agree to our terms of service and privacy statement.</p>
                 </Form.Group>
             </Form>
@@ -129,18 +129,16 @@ export default class LoginForm extends Component {
             this.setState({ loading: true })
 
             let signInData = { email: email, password: password }
-            //console.log(email + "," + password.toString())
 
-            axios.post(apis.signin, signInData)
+            req.post("/auth/signin/", signInData)
                 .then((response) => {
                     if (response.status === 200) {
                         let credentials = response.data;
-                        axios.get(apis.signinwithtoken + credentials.accessToken)
+                        req.get('/auth/signin/token/' + credentials.accessToken)
                             .then((userresponse) => {
                                 if (userresponse.status === 200) {
                                     this.props.context.setCredentials(credentials)
                                     this.props.context.setUser(userresponse.data)
-                                    //console.log(JSON.parse(localStorage.getItem("user")))
                                     this.setState({ redirect: true })
                                 }
                             })

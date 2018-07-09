@@ -1,10 +1,9 @@
 import React from 'react'
 import { Button, Row, Col, List, Modal, Input, Alert, Avatar, Tag } from 'antd'
 import Header from '../../shared/Header/Header'
-import { colors, apis } from '../../shared/config'
+import { colors } from '../../shared/config'
 import { View } from 'react-native-web'
 import { AppContext } from '../../provider/DataProvider'
-import axios from 'axios'
 import req from '../../shared/axios/requests'
 
 let stateContext = null
@@ -32,7 +31,7 @@ export default class Organisations extends React.Component {
 
         // Proceed to get user organisations
 
-        axios.get(apis.organisations + stateContext.state.user.id)
+        req.get("/organisations/" + stateContext.state.user.id)
             .then((response) => {
                 if (response.status === 200) {
                     this.setState({ organisations: response.data, loading: false })

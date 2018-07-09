@@ -62,7 +62,6 @@ export default class Organisation extends React.Component {
                     let organisation = response.data;
                     let isAdmin = organisation.roles.includes("ADMIN")
                     this.setState({ loading: false, organisation: organisation, school: !isAdmin })
-                    //STATE_CONTEXT.updateStateParameter("organisationID",  organisation.id);
                     STATE_CONTEXT.setOrganisation(organisation.id);
                 }
                 else
