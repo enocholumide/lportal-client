@@ -7,6 +7,7 @@ import Login from '../components/Authentication/Login'
 import Course from '../components/Courses/index'
 import { AppContext } from '../provider/DataProvider'
 import Loading from '../shared/Loader'
+import { Alert } from 'antd'
 
 //let stateContext = undefined
 class Navigator extends Component {
@@ -35,6 +36,15 @@ class Navigator extends Component {
                     {(context) => (
 
                         <React.Fragment>
+
+                            <Alert
+                                message={<div>This <a href='https://github.com/enocholumide/lportal-client'>Website</a> is currently under development.</div>}   
+                                type="info"
+                                description= {<div><span style={{fontWeight: 'bold'}}>Student Account:</span> sandrajenks@yahoo.com | Password: secret3. 
+                                <span style={{fontWeight: 'bold', marginLeft: '10px'}}>Teacher/ Admin Account:</span> admin@lportal.com | Password: 'secret"</div>}
+                                closable
+                                style={{margin: '10px', textAlign: 'center', fontSize: 8}}
+                            />
                             <Switch>
 
                                 <Route exact path="/" component={Home} />
