@@ -126,7 +126,7 @@ class Header extends Component {
             <Nav className="ml-auto" navbar>
 
                 <NavItem>
-                    <NavLink href="https://github.com/enocholumide">
+                    <NavLink href="https://github.com/musafadul">
                         <Image
                             src={context.state.user.photoUrl}
                             style={{ width: 25, height: 25, borderRadius: 3 }}
